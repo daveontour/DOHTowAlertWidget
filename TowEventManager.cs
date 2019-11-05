@@ -10,29 +10,53 @@ using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
 namespace DOH_AMSTowingWidget {
 
+
+    // Class for holding the flight information that is contained in the Towing message
+    class FlightNode {
+        public string nature;
+        public string airlineCode;
+        public string fltNumber;
+        public string schedDate;
+
+        public FlightNode(XElement node) {
+
+            this.nature = node.Element("Nature").Value;
+            this.airlineCode = node.Element("AirlineCode").Value;
+            this.fltNumber = node.Element("FlightNumber").Value;
+            this.schedDate = node.Element("ScheduledDate").Value;
+        }
+    }
+
+    // Hold all the information about each towing ina convenient package
     class TowEntity {
         public string towID;
+
+        // The timer which goes off at the time of the scheduled start
         public Timer alertTimer;
         public XElement xmlNode;
         public DateTime schedTime;
         public bool isActualSet = false;
-        public DateTime actualTime;
 
-        public TowEntity(string key, XElement xmlNode) {
-            this.towID = key;
+        // The flights associated with the the tow, might be arrival, departure or both
+        public List<FlightNode> flights = new List<FlightNode>();
+
+        public TowEntity(XElement xmlNode) {
+            this.towID = xmlNode.Element("TowingId").Value;
             this.xmlNode = xmlNode;
             this.schedTime = Convert.ToDateTime(xmlNode.Element("ScheduledStart").Value);
+
+            // Flag to indicate if an ActualStart or ActualEnd has been entered
             this.isActualSet = xmlNode.Element("ActualStart").Value != "" || xmlNode.Element("ActualEnd").Value != "";
 
-            if (this.isActualSet) {
-                this.actualTime = Convert.ToDateTime(xmlNode.Element("ActualStart").Value);
+            // Get the flight information for the flights connected to the tow
+            IEnumerable<XElement> flightNodes = xmlNode.Element("FlightIdentifiers").Elements("FlightIdentifier");
+            foreach (XElement fltNode in flightNodes) {
+                flights.Add(new FlightNode(fltNode));
             }
         }
 
-        public TowEntity(XElement xmlNode) : this(xmlNode.Element("TowingId").Value, xmlNode) { }
-
-        public new string ToString() {
-            return $"TowID: {towID},  ScheduleTime: {schedTime}, ActualTime: {actualTime}, isActualSet: {isActualSet}";
+         public new string ToString() {
+            return $"TowID: {towID},  ScheduleTime: {schedTime}, isActualSet: {isActualSet}";
         }
 
     }
@@ -56,7 +80,7 @@ namespace DOH_AMSTowingWidget {
                 // The ActualTime is set, so the the flights should be updated that
                 // the tow has started and any timer task should be cancelled and the 
                 // TowEntity removed from the map
-                UpdateFlightTowStarted(tow);
+                SendAlertStatus(tow, "false"); ;
                 RemoveTow(tow.towID);
                 return null;
             } else {
@@ -76,7 +100,7 @@ namespace DOH_AMSTowingWidget {
 
                 // The code to execute when the alert time happend
                     alertTimer.Elapsed += async (source, eventArgs) =>  {
-                        UpdateFlightTowNotStarted(tow);
+                        SendAlertStatus(tow, "true");
                 };
 
                 // Initiate the timer
@@ -90,21 +114,6 @@ namespace DOH_AMSTowingWidget {
 
                 return tow;
             }
-        }
-
-        private void UpdateFlightTowStarted(TowEntity tow) {
-            Console.WriteLine($"CLEAR ALERT ---> Towing HAS started {tow.towID}");
-            AMSIntegrationServiceClient client = new AMSIntegrationServiceClient();
-          
-            
-        }
-
-        public void UpdateFlightTowUnset(TowEntity tow) {
-            Console.WriteLine($"CLEAR ALERT ---> Towing HAS been Unset {tow.towID}");
-        }
-
-        private void UpdateFlightTowNotStarted(TowEntity tow) {
-            Console.WriteLine($"ALERT --->Towing not started {tow.towID}");
         }
 
         public void DeleteTowEvent(string towID) {
@@ -142,11 +151,10 @@ namespace DOH_AMSTowingWidget {
                     TowEntity tow = towMap[key];
                     if (tow.alertTimer != null) {
                         tow.alertTimer.Stop();
-                        tow.alertTimer.Dispose();
-                       
+                        tow.alertTimer.Dispose();                       
                     }
-                  
                     towMap.Remove(key);
+                    SendAlertStatus(tow, "false");
                 } catch { }
             }
         }
@@ -192,9 +200,25 @@ namespace DOH_AMSTowingWidget {
 
         }
 
+        // The FlightId is a structure required by WebService to make specify the flight to make the update to
         private FlightId GetFlightID(TowEntity tow, bool arr) {
 
             // arr = true for the arrival flight, false for the departing flight
+            
+            FlightNode flt = null;
+
+            foreach (FlightNode fltNode in tow.flights) {
+                if (fltNode.nature == "Arrival" && arr) {
+                    flt = fltNode;
+                }
+                if (fltNode.nature == "Departure" && !arr) {
+                    flt = fltNode;
+                }
+            }
+
+            if (flt == null) {
+                return null;
+            }
 
             LookupCode apCode = new LookupCode();
             apCode.codeContextField = CodeContext.ICAO;
@@ -203,16 +227,16 @@ namespace DOH_AMSTowingWidget {
 
             LookupCode alCode = new LookupCode();
             alCode.codeContextField = CodeContext.IATA;
-            alCode.valueField = "QR";
+            alCode.valueField = flt.airlineCode; ;
             LookupCode[] al = { alCode };
 
 
             FlightId flightID = new FlightId();
-            flightID.flightKindField = FlightKind.Arrival;
+            flightID.flightKindField = arr?FlightKind.Arrival:FlightKind.Departure;
             flightID.airportCodeField = ap;
             flightID.airlineDesignatorField = al;
-            flightID.scheduledDateField = Convert.ToDateTime("2019-11-05");
-            flightID.flightNumberField = "744";
+            flightID.scheduledDateField = Convert.ToDateTime(flt.schedDate);
+            flightID.flightNumberField = flt.fltNumber;
 
             return flightID;
 

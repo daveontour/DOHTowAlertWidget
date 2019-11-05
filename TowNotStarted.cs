@@ -119,7 +119,6 @@ namespace DOH_AMSTowingWidget {
                         if (xml.Contains("TowingDeletedNotification")) {
                             XElement tow = xmlRoot.Element("Notification").Element("Towing");
                             towManager.RemoveTow(tow);
-                       //     towManager.UpdateFlightTowUnset(tow);
                             continue;
                         }
                     }
