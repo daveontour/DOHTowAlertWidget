@@ -27,7 +27,7 @@ namespace DOH_AMSTowingWidget {
         }
     }
 
-    // Hold all the information about each towing ina convenient package
+    // Hold all the information about each towing in a convenient package
     class TowEntity {
         public string towID;
 
@@ -91,6 +91,9 @@ namespace DOH_AMSTowingWidget {
                 //Create the Timer Task
                 double timeToTrigger = (tow.schedTime  - DateTime.Now).TotalMilliseconds;
 
+                // Add the Grace time, that is the amount of time *after* the scheduled start that the alert will be raised. 
+                timeToTrigger = timeToTrigger + Parameters.GRACE_PERIOD;
+
                 //It may have been in the past, so schedule it straight away
                 timeToTrigger = Math.Max(timeToTrigger, 1000);
                 Timer alertTimer = new Timer() {
@@ -100,6 +103,7 @@ namespace DOH_AMSTowingWidget {
 
                 // The code to execute when the alert time happend
                     alertTimer.Elapsed += async (source, eventArgs) =>  {
+                        // Call the method to set the custom field on AMS
                         SendAlertStatus(tow, "true");
                 };
 

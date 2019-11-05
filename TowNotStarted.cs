@@ -27,14 +27,14 @@ namespace DOH_AMSTowingWidget {
 
         public void Start() {
 
-            // Initiall Populate the Towing Cache at startup
+            // Initially Populate the Towing Cache at startup 
             var t = Task.Run(() => GetCurrentTowings());
             t.Wait();
 
             //// Set the timer to regularly do a complete refresh of the towing cache
             resetTimer = new System.Timers.Timer() {
                 AutoReset = true,
-                Interval = 100000
+                Interval = Parameters.REFRESH_INTERVAL
             };
             resetTimer.Elapsed += async (source, eventArgs) =>
             {
@@ -49,7 +49,6 @@ namespace DOH_AMSTowingWidget {
             recvQueue = new MessageQueue(Parameters.RECVQ);
             StartMQListener();
 
-            Console.WriteLine("Started");
         }
 
         public void Stop() {
@@ -58,14 +57,23 @@ namespace DOH_AMSTowingWidget {
 
         public async Task GetCurrentTowings() {
 
+            // Empty the notification queue first, so no old message overwrite the current status
+            recvQueue = new MessageQueue(Parameters.RECVQ);
+            recvQueue.Purge();
             this.towManager.Clear();
 
               using (var client = new HttpClient()) {
 
-                //client.BaseAddress = new Uri(Parameters.BASE_URI);
-                client.DefaultRequestHeaders.Add("Authorization", "b406564f-44aa-4e51-a80a-aa9ed9a04ec6");
+                client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
 
-                var result = await client.GetAsync(@"http://localhost:80/api/v1/DOH/Towings/2019-11-05T09:36:54.210Z/2019-11-06T13:36:54.210Z");
+                DateTime now = DateTime.UtcNow;
+                string from = now.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                string to = now.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                string uri = $"http://localhost:80/api/v1/DOH/Towings/{from}/{to}";
+
+                Console.WriteLine(uri);
+
+                var result = await client.GetAsync(uri);
 
                 XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
 
