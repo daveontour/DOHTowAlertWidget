@@ -17,7 +17,7 @@ namespace DOH_AMSTowingWidget {
             var exitCode = HostFactory.Run(x =>
             {
                 /*
-                 * The 'Exchange' class is the class that provides the actual functionality.
+                 * The 'TowNotStarted' class is the class that provides the actual functionality.
                  * The two key methods that Exchange has to implement are "Start()" and "Stop()"
                  */
 
