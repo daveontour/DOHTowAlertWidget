@@ -11,7 +11,7 @@ using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 namespace DOH_AMSTowingWidget {
     class TowEventManager {
 
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        public static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly Dictionary<string, TowEntity> towMap = new Dictionary<string, TowEntity>();
         private static readonly object padlock = new object();
 
@@ -21,7 +21,7 @@ namespace DOH_AMSTowingWidget {
 
             TowEntity tow = new TowEntity(e);
 
-            Console.WriteLine($"Set Tow Event {tow.towID}");
+            Logger.Trace($"Set Tow Event {tow.towID}");
             // The constructor of TowEntity parses out the key data and sets a flag
             // if either ActualStart or ActualEnd is set.
 

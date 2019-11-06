@@ -8,16 +8,14 @@ namespace DOH_AMSTowingWidget {
     // Hold all the information about each towing in a convenient package
     class TowEntity {
         public string towID;
-         public Timer alertTimer;
+        public Timer alertTimer;
         public DateTime schedTime;
         public bool isActualSet = false;
-
-        // The flights associated with the the tow, might be arrival, departure or both
-        public List<FlightNode> flights = new List<FlightNode>();
+        public List<FlightNode> flights = new List<FlightNode>(); // The flights associated with the the tow, might be arrival, departure or both
 
         public TowEntity(XElement xmlNode) {
             this.towID = xmlNode.Element("TowingId").Value;
-             this.schedTime = Convert.ToDateTime(xmlNode.Element("ScheduledStart").Value);
+            this.schedTime = Convert.ToDateTime(xmlNode.Element("ScheduledStart").Value);
 
             // Flag to indicate if an ActualStart or ActualEnd has been entered
             this.isActualSet = xmlNode.Element("ActualStart").Value != "" || xmlNode.Element("ActualEnd").Value != "";
@@ -29,7 +27,7 @@ namespace DOH_AMSTowingWidget {
             }
         }
 
-         public new string ToString() {
+        public new string ToString() {
             return $"TowID: {towID},  ScheduleTime: {schedTime}, isActualSet: {isActualSet}";
         }
 
@@ -41,7 +39,8 @@ namespace DOH_AMSTowingWidget {
                     alertTimer = null;
                 }
             } catch (Exception e) {
-                Console.WriteLine(e.Message);
+                TowEventManager.Logger.Error("Error stopping alert timer. See next message");
+                TowEventManager.Logger.Error(e.Message);
             }
         }
 

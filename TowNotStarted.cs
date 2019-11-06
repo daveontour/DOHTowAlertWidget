@@ -70,7 +70,7 @@ namespace DOH_AMSTowingWidget {
                 string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
                 string uri = Parameters.BASE_URI+$"/{from}/{to}";
 
-                Console.WriteLine(uri);
+                Logger.Trace(uri);
 
                 var result = await client.GetAsync(uri);
                 XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
@@ -78,7 +78,7 @@ namespace DOH_AMSTowingWidget {
                 foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
                      var te = towManager.SetTowEvent(e);
                     if (te != null) {
-                        Console.WriteLine(te.ToString());
+                        Logger.Trace(te.ToString());
                     }
                 }
             }
@@ -116,7 +116,7 @@ namespace DOH_AMSTowingWidget {
 
                             StreamReader reader = new StreamReader(msg.BodyStream);
                             string xml = reader.ReadToEnd();
-                            Console.WriteLine(xml);
+                            Logger.Trace(xml);
                             XElement xmlRoot = XDocument.Parse(xml).Root;
 
                             if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {
