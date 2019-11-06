@@ -14,7 +14,7 @@ namespace DOH_AMSTowingWidget {
     class TowNotStarted {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        
+
         private readonly TowEventManager towManager = new TowEventManager();
         private static MessageQueue recvQueue;
         private bool startListenLoop = true;
@@ -62,13 +62,13 @@ namespace DOH_AMSTowingWidget {
             recvQueue.Purge();
             this.towManager.Clear();
 
-              using (var client = new HttpClient()) {
+            using (var client = new HttpClient()) {
 
                 client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
 
                 string from = DateTime.UtcNow.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
                 string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
-                string uri = Parameters.BASE_URI+$"/{from}/{to}";
+                string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Towings/{from}/{to}";
 
                 Logger.Trace(uri);
 
@@ -76,7 +76,7 @@ namespace DOH_AMSTowingWidget {
                 XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
 
                 foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
-                     var te = towManager.SetTowEvent(e);
+                    var te = towManager.SetTowEvent(e);
                     if (te != null) {
                         Logger.Trace(te.ToString());
                     }

@@ -11,6 +11,8 @@ namespace DOH_AMSTowingWidget {
      * Class to make the configuration parameters available. 
      * The static constructor makes sure the parameters are initialised the first time the 
      * class is accessed
+     * 
+     * 
      */
     public class Parameters {
 
