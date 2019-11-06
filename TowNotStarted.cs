@@ -21,7 +21,7 @@ namespace DOH_AMSTowingWidget {
         private bool startListenLoop = true;
         private System.Timers.Timer resetTimer;
         private Thread receiveThread;
-
+        private static Random random = new Random();
         public TowNotStarted() {
 
         }
@@ -107,6 +107,8 @@ namespace DOH_AMSTowingWidget {
             } while (!bRunningOK);
         }
 
+
+
         public void StartMQListener() {
             try {
                 this.startListenLoop = true;
@@ -130,39 +132,62 @@ namespace DOH_AMSTowingWidget {
 
         private void ListenToQueue() {
 
-            try {
-                while (startListenLoop) {
 
-                    //Put it in a Try/Catch so on bad message doesn't stop the system
-                    try {
-                        using (Message msg = recvQueue.Receive()) {
+            while (startListenLoop) {
 
-                            StreamReader reader = new StreamReader(msg.BodyStream);
-                            string xml = reader.ReadToEnd();
-                           // Logger.Trace(xml);
-                            XElement xmlRoot = XDocument.Parse(xml).Root;
+                //Put it in a Try/Catch so on bad message doesn't or reading problem stop the system
+                try {
+                    Logger.Trace("Waiting for notification message");
+                    using (Message msg = recvQueue.Receive()) {
+                        
+                        Logger.Trace("Message Received");
+                        StreamReader reader = new StreamReader(msg.BodyStream);
+                        string xml = reader.ReadToEnd();               
+                        Task.Run(() => ProcessMessage(xml, RandomString(10)));
 
-                            if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {
-                                XElement towNode = xmlRoot.Element("Notification").Element("Towing");
-                                towManager.SetTowEvent(towNode);
-                                continue;
-                            }
-
-                            if (xml.Contains("TowingDeletedNotification")) {
-                                XElement towNode = xmlRoot.Element("Notification").Element("Towing");
-                                towManager.RemoveTow(towNode.Element("TowingId").Value);
-                                continue;
-                            }
-                        }
-                    } catch (Exception e) {
-                        Logger.Error("Error in Reciveving and Processing Notification Message");
-                        Logger.Error(e.Message);
                     }
+                } catch (Exception e) {
+                    Logger.Error("Error in Reciveving and Processing Notification Message");
+                    Logger.Error(e.Message);
+                    Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);
                 }
-            } catch (Exception ex) {
-                Logger.Error("Error in Listening Queue");
-                Logger.Error(ex.Message);
             }
+        }
+
+        public void ProcessMessage(string xml, string id) {
+
+            Logger.Trace($"Processing Message  {id}");
+
+            try {
+
+                XElement xmlRoot = XDocument.Parse(xml).Root;
+
+                if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {
+                    XElement towNode = xmlRoot.Element("Notification").Element("Towing");
+                    towManager.SetTowEvent(towNode);
+                    Logger.Trace($"Message Processed {id}");
+                    return;
+                }
+
+                if (xml.Contains("TowingDeletedNotification")) {
+                    XElement towNode = xmlRoot.Element("Notification").Element("Towing");
+                    towManager.RemoveTow(towNode.Element("TowingId").Value);
+                    Logger.Trace($"Message Processed {id}");
+                    return;
+                }
+            } catch (Exception e) {
+                Logger.Trace($"Message Processing Error {id}");
+                Logger.Trace(e.Message);
+            }
+           
+
+
+        }
+
+        public static string RandomString(int length) {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

@@ -30,12 +30,12 @@ namespace DOH_AMSTowingWidget {
                 // the tow has started and any timer task should be cancelled and the 
                 // TowEntity removed from the map
                 SendAlertStatusClear(tow);
-                RemoveTow(tow.towID);
+                RemoveTow(tow.towID, false);
                 return null;
             } else {
 
                 // Remove the current event if it is already there
-                RemoveTow(tow.towID);
+                RemoveTow(tow.towID, false);
 
                 //Create the Timer Task
                 double timeToTrigger = (tow.schedTime - DateTime.Now).TotalMilliseconds;
@@ -83,15 +83,23 @@ namespace DOH_AMSTowingWidget {
             }
         }
 
-        public void RemoveTow(string key) {
+        public void RemoveTow(string key, bool logError = true) {
             lock (padlock) {
                 try {
                     TowEntity tow = towMap[key];
                     Logger.Trace($"Removing Tow Event {tow.ToString()}");
-                    tow.StopTimer();
-                    towMap.Remove(key);
+                    try {
+                        tow.StopTimer();
+                    } catch (Exception e) {
+
+                    }
                     SendAlertStatusClear(tow);
-                } catch { }
+                    towMap.Remove(key);
+                } catch (Exception e) {
+                    if (logError) {
+                        Logger.Error(e.Message);
+                    }
+                }
             }
         }
 
@@ -123,6 +131,9 @@ namespace DOH_AMSTowingWidget {
                     if (flightID != null) {
                         System.Xml.XmlElement rtn = client.UpdateFlight(Parameters.TOKEN, flightID, val);
                         callOK = true;
+                        Logger.Trace($"Update Written to AMS (Arrival Flight)  {tow.towID}");
+                    } else {
+                        callOK = true;
                     }
                 } catch (Exception e) {
                     Logger.Error("Failed to update the custom field");
@@ -143,8 +154,12 @@ namespace DOH_AMSTowingWidget {
                 try {
                     if (flightID != null) {
                         System.Xml.XmlElement rtn = client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                        Logger.Trace($"Update Written to AMS (Departure Flight) {tow.towID}");
+                        callOK = true;
+                    } else {
                         callOK = true;
                     }
+
                 } catch (Exception e) {
                     Logger.Error("Failed to update the custom field");
                     Logger.Error(e.Message);
