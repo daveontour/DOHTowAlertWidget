@@ -72,6 +72,7 @@ namespace DOH_AMSTowingWidget {
         public void Clear() {
             lock (padlock) {
 
+                Logger.Trace("Clearing Tow Cache");
                 // Make sure any timers are disabled
                 foreach (TowEntity tow in towMap.Values) {
                     tow.StopTimer();
@@ -85,6 +86,7 @@ namespace DOH_AMSTowingWidget {
              lock (padlock) {
                 try {
                     TowEntity tow = towMap[key];
+                    Logger.Trace($"Removing Tow Event {tow.ToString()}");
                     tow.StopTimer();
                     towMap.Remove(key);
                     SendAlertStatusClear(tow);

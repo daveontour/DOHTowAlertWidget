@@ -57,6 +57,7 @@ namespace DOH_AMSTowingWidget {
 
         public async Task GetCurrentTowings() {
 
+            Logger.Trace("Resetting Tow Cache");
             // Empty the notification queue first, so no old message overwrite the current status
             recvQueue = new MessageQueue(Parameters.RECVQ);
             recvQueue.Purge();
@@ -79,6 +80,8 @@ namespace DOH_AMSTowingWidget {
                     towManager.SetTowEvent(e);
                 }
             }
+
+            Logger.Trace("Tow Cache Reset");
         }
 
         public void StartMQListener() {
