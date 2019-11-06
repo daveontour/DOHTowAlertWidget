@@ -68,9 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AMS.cs" />
+    <Compile Include="FlightNode.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TowEntity.cs" />
     <Compile Include="TowEventManager.cs" />
     <Compile Include="TowNotStarted.cs" />
   </ItemGroup>

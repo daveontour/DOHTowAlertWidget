@@ -15,7 +15,7 @@ namespace DOH_AMSTowingWidget {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         
-        public TowEventManager towManager = new TowEventManager();
+        private readonly TowEventManager towManager = new TowEventManager();
         private static MessageQueue recvQueue;
         private bool startListenLoop = true;
         private System.Timers.Timer resetTimer;
@@ -66,15 +66,13 @@ namespace DOH_AMSTowingWidget {
 
                 client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
 
-                DateTime now = DateTime.UtcNow;
-                string from = now.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
-                string to = now.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
-                string uri = $"http://localhost:80/api/v1/DOH/Towings/{from}/{to}";
+                string from = DateTime.UtcNow.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                string uri = Parameters.BASE_URI+$"/{from}/{to}";
 
                 Console.WriteLine(uri);
 
                 var result = await client.GetAsync(uri);
-
                 XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
 
                 foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
@@ -111,27 +109,35 @@ namespace DOH_AMSTowingWidget {
 
             try {
                 while (startListenLoop) {
-                    using (Message msg = recvQueue.Receive()) {
 
-                        StreamReader reader = new StreamReader(msg.BodyStream);
-                        string xml = reader.ReadToEnd();
-                        Console.WriteLine(xml);
-                        XElement xmlRoot = XDocument.Parse(xml).Root;
+                    //Put it in a Try/Catch so on bad message doesn't stop the system
+                    try {
+                        using (Message msg = recvQueue.Receive()) {
 
-                        if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {
-                            XElement tow = xmlRoot.Element("Notification").Element("Towing");
-                            towManager.SetTowEvent(tow);
-                            continue;
+                            StreamReader reader = new StreamReader(msg.BodyStream);
+                            string xml = reader.ReadToEnd();
+                            Console.WriteLine(xml);
+                            XElement xmlRoot = XDocument.Parse(xml).Root;
+
+                            if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {
+                                XElement towNode = xmlRoot.Element("Notification").Element("Towing");
+                                towManager.SetTowEvent(towNode);
+                                continue;
+                            }
+
+                            if (xml.Contains("TowingDeletedNotification")) {
+                                XElement towNode = xmlRoot.Element("Notification").Element("Towing");
+                                towManager.RemoveTow(towNode.Element("TowingId").Value);
+                                continue;
+                            }
                         }
-
-                        if (xml.Contains("TowingDeletedNotification")) {
-                            XElement tow = xmlRoot.Element("Notification").Element("Towing");
-                            towManager.RemoveTow(tow);
-                            continue;
-                        }
+                    } catch (Exception e) {
+                        Logger.Error("Error in Reciveving and Processing Notification Message");
+                        Logger.Error(e.Message);
                     }
                 }
             } catch (Exception ex) {
+                Logger.Error("Error in Listening Queue");
                 Logger.Error(ex.Message);
             }
         }
