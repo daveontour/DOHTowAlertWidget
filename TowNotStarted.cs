@@ -76,10 +76,7 @@ namespace DOH_AMSTowingWidget {
                 XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
 
                 foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
-                    var te = towManager.SetTowEvent(e);
-                    if (te != null) {
-                        Logger.Trace(te.ToString());
-                    }
+                    towManager.SetTowEvent(e);
                 }
             }
         }
@@ -116,7 +113,7 @@ namespace DOH_AMSTowingWidget {
 
                             StreamReader reader = new StreamReader(msg.BodyStream);
                             string xml = reader.ReadToEnd();
-                            Logger.Trace(xml);
+                           // Logger.Trace(xml);
                             XElement xmlRoot = XDocument.Parse(xml).Root;
 
                             if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {

@@ -21,7 +21,7 @@ namespace DOH_AMSTowingWidget {
 
             TowEntity tow = new TowEntity(e);
 
-            Logger.Trace($"Set Tow Event {tow.towID}");
+            Logger.Trace($"Set Tow Event {tow.ToString()}");
             // The constructor of TowEntity parses out the key data and sets a flag
             // if either ActualStart or ActualEnd is set.
 
