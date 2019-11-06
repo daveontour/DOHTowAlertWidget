@@ -10,6 +10,7 @@ using System.Messaging;
 using System.Threading;
 using System.IO;
 
+
 namespace DOH_AMSTowingWidget {
     class TowNotStarted {
 
@@ -59,29 +60,51 @@ namespace DOH_AMSTowingWidget {
 
             Logger.Trace("Resetting Tow Cache");
             // Empty the notification queue first, so no old message overwrite the current status
-            recvQueue = new MessageQueue(Parameters.RECVQ);
-            recvQueue.Purge();
+            try {
+                recvQueue = new MessageQueue(Parameters.RECVQ);
+                recvQueue.Purge();
+            } catch (Exception e) {
+                Logger.Error($"Fatal Error: MQMQ Notification Queue not accessible or readable");
+                Logger.Error(e.Message);
+                Logger.Error($"1. Check for existance and permission on the queue {Parameters.RECVQ}\n");
+                Thread.Sleep(5000);
+                System.Environment.Exit(1);
+            }
             this.towManager.Clear();
 
-            using (var client = new HttpClient()) {
+            bool bRunningOK = false;
+            do {
+                try {
 
-                client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
+                    using (var client = new HttpClient()) {
 
-                string from = DateTime.UtcNow.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
-                string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
-                string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Towings/{from}/{to}";
+                        client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
 
-                Logger.Trace(uri);
+                        string from = DateTime.UtcNow.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                        string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
+                        string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Towings/{from}/{to}";
 
-                var result = await client.GetAsync(uri);
-                XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
+                        Logger.Trace(uri);
 
-                foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
-                    towManager.SetTowEvent(e);
+                        var result = await client.GetAsync(uri);
+                        XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
+
+                        foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
+                            towManager.SetTowEvent(e);
+                        }
+                    }
+
+                    Logger.Trace("Tow Cache Reset");
+                    bRunningOK = true;
+
+                } catch (Exception e) {
+                    Logger.Error("Failed to retrieve tow events from the AMS RestAPI Server");
+                    Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.BASE_URI} ");
+                    Logger.Error($"2. Check AMS Access Token is correct\n");
+                    bRunningOK = false;
+                    Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);
                 }
-            }
-
-            Logger.Trace("Tow Cache Reset");
+            } while (!bRunningOK);
         }
 
         public void StartMQListener() {

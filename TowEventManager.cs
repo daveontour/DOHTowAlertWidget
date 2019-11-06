@@ -35,10 +35,10 @@ namespace DOH_AMSTowingWidget {
             } else {
 
                 // Remove the current event if it is already there
-                 RemoveTow(tow.towID);
+                RemoveTow(tow.towID);
 
                 //Create the Timer Task
-                double timeToTrigger = (tow.schedTime  - DateTime.Now).TotalMilliseconds;
+                double timeToTrigger = (tow.schedTime - DateTime.Now).TotalMilliseconds;
 
                 // Add the Grace time, that is the amount of time *after* the scheduled start that the alert will be raised. 
                 timeToTrigger = timeToTrigger + Parameters.GRACE_PERIOD;
@@ -51,9 +51,10 @@ namespace DOH_AMSTowingWidget {
                 };
 
                 // The code to execute when the alert time happend
-                    alertTimer.Elapsed += async (source, eventArgs) =>  {
-                        // Call the method to set the custom field on AMS
-                        SendAlertStatusSet(tow);
+                alertTimer.Elapsed += async (source, eventArgs) =>
+                {
+                    // Call the method to set the custom field on AMS
+                    SendAlertStatusSet(tow);
                 };
 
                 // Initiate the timer
@@ -83,7 +84,7 @@ namespace DOH_AMSTowingWidget {
         }
 
         public void RemoveTow(string key) {
-             lock (padlock) {
+            lock (padlock) {
                 try {
                     TowEntity tow = towMap[key];
                     Logger.Trace($"Removing Tow Event {tow.ToString()}");
@@ -115,17 +116,45 @@ namespace DOH_AMSTowingWidget {
 
             // The Arrival flight (if any)
             FlightId flightID = tow.GetArrivalFlightID();
-            if (flightID != null) {
-                //The WebServices Call which Sends the Update Request
-                client.UpdateFlight(Parameters.TOKEN, flightID, val);
-            }
+
+            bool callOK = false;
+            do {
+                try {
+                    if (flightID != null) {
+                        System.Xml.XmlElement rtn = client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                        callOK = true;
+                    }
+                } catch (Exception e) {
+                    Logger.Error("Failed to update the custom field");
+                    Logger.Error(e.Message);
+                    Logger.Error($"1. Check AMS Web API Server is running ");
+                    Logger.Error($"2. Check AMS Access Token is correct\n");
+                    System.Threading.Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);
+                    callOK = false;
+                }
+            } while (!callOK);
+
+            callOK = false;
 
             // The Departure flight (if any)
             flightID = tow.GetDepartureFlightID();
-            if (flightID != null) {
-                //The WebServices Call which Sends the Update Request
-                client.UpdateFlight(Parameters.TOKEN, flightID, val);
-            }
+
+            do {
+                try {
+                    if (flightID != null) {
+                        System.Xml.XmlElement rtn = client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                        callOK = true;
+                    }
+                } catch (Exception e) {
+                    Logger.Error("Failed to update the custom field");
+                    Logger.Error(e.Message);
+                    Logger.Error($"1. Check AMS Web API Server is running ");
+                    Logger.Error($"2. Check AMS Access Token is correct\n");
+
+                    System.Threading.Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);
+                    callOK = false;
+                }
+            } while (!callOK);
         }
     }
 }

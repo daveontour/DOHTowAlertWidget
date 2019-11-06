@@ -28,6 +28,7 @@ namespace DOH_AMSTowingWidget {
         public static int GRACE_PERIOD;
         public static double FROM_HOURS;
         public static double TO_HOURS;
+        public static int RESTSERVER_RETRY_INTERVAL;
 
 
         static Parameters() { 
@@ -40,11 +41,14 @@ namespace DOH_AMSTowingWidget {
                 ALERT_FIELD  = (string)ConfigurationManager.AppSettings["AlertField"];
                 GRACE_PERIOD = Int32.Parse((string)ConfigurationManager.AppSettings["GracePeriod"]);
                 REFRESH_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["RefreshInterval"]);
+                RESTSERVER_RETRY_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["ResetServerRetryInterval"]);
                 FROM_HOURS = double.Parse((string)ConfigurationManager.AppSettings["FromHours"]);
                 TO_HOURS = double.Parse((string)ConfigurationManager.AppSettings["ToHours"]);
             } catch (Exception ex) {
                 Logger.Error(ex.Message);
             }
         }
+
+        
     }
 }
