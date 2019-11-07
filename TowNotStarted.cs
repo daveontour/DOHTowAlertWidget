@@ -10,66 +10,80 @@ using System.Messaging;
 using System.Threading;
 using System.IO;
 
+//Version RC 1.0
 
 namespace DOH_AMSTowingWidget {
     class TowNotStarted {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private readonly TowEventManager towManager = new TowEventManager();
-        private static MessageQueue recvQueue;
-        private bool startListenLoop = true;
-        private System.Timers.Timer resetTimer;
-        private Thread receiveThread;
-        private static Random random = new Random();
-        public TowNotStarted() {
-
-        }
+        private readonly TowEventManager towManager = new TowEventManager();  //The class the takes care of set and executing the alerts
+        private static MessageQueue recvQueue;  // Queue to recieve update notifications on
+        private bool startListenLoop = true;    // Flag controlling the execution of the update notificaiton listener
+        private System.Timers.Timer resetTimer; // Timer to control the big reset of the cache
+        private Thread receiveThread;           // Thread the notification listener runs in 
+        private readonly static Random random = new Random();  
+        public TowNotStarted() { }
 
         public void Start() {
 
+            Logger.Info("TowNotStarted Alert Service Started");
+
             // Initially Populate the Towing Cache at startup 
-            var t = Task.Run(() => GetCurrentTowings());
+            var t = Task.Run(() => GetCurrentTowingsAsync());
             t.Wait();
+
+            Logger.Trace("Initial Population of TowEvent Cache Completed");
+
 
             //// Set the timer to regularly do a complete refresh of the towing cache
             resetTimer = new System.Timers.Timer() {
                 AutoReset = true,
                 Interval = Parameters.REFRESH_INTERVAL
             };
-            resetTimer.Elapsed += async (source, eventArgs) =>
-            {
+            resetTimer.Elapsed += (source, eventArgs) => {
                 resetTimer.Stop();
-                var r = Task.Run(() => GetCurrentTowings());
+                var r = Task.Run(() => GetCurrentTowingsAsync());
                 r.Wait();
                 resetTimer.Start();
             };
             resetTimer.Start();
 
+            Logger.Trace($"Cache Reset timer set up for {Parameters.REFRESH_INTERVAL}ms");
+
             //Start Listener for incoming towing notifications
             recvQueue = new MessageQueue(Parameters.RECVQ);
             StartMQListener();
 
+            Logger.Trace($"Started Notification Queue Listener on queue: {Parameters.RECVQ}");
+
         }
 
         public void Stop() {
+            Logger.Info("TowNotStarted Alert Service Stopping");
+            StopMQListener();
             resetTimer.Stop();
         }
 
-        public async Task GetCurrentTowings() {
+        public async Task GetCurrentTowingsAsync() {
 
             Logger.Trace("Resetting Tow Cache");
+
             // Empty the notification queue first, so no old message overwrite the current status
             try {
-                recvQueue = new MessageQueue(Parameters.RECVQ);
-                recvQueue.Purge();
+                using (MessageQueue queue = new MessageQueue(Parameters.RECVQ)) {
+                    queue.Purge();
+                }
             } catch (Exception e) {
                 Logger.Error($"Fatal Error: MQMQ Notification Queue not accessible or readable");
                 Logger.Error(e.Message);
                 Logger.Error($"1. Check for existance and permission on the queue {Parameters.RECVQ}\n");
+                //Give the operator a chance to read the message and then exit
                 Thread.Sleep(5000);
                 System.Environment.Exit(1);
             }
+
+            // Clear the tow event cache of any existing events
             this.towManager.Clear();
 
             bool bRunningOK = false;
@@ -84,31 +98,31 @@ namespace DOH_AMSTowingWidget {
                         string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
                         string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Towings/{from}/{to}";
 
-                        Logger.Trace(uri);
+                        Logger.Trace($"URI for TowEvent cache source set to {uri}");
 
                         var result = await client.GetAsync(uri);
                         XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
 
+                        Logger.Trace("Populating TowEvent Cache");
                         foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "Towing") select n) {
                             towManager.SetTowEvent(e);
                         }
+                        Logger.Trace("Populating TowEvent Cache Complete");
                     }
-
-                    Logger.Trace("Tow Cache Reset");
                     bRunningOK = true;
 
-                } catch (Exception e) {
+                } catch (Exception ) {
                     Logger.Error("Failed to retrieve tow events from the AMS RestAPI Server");
                     Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.BASE_URI} ");
                     Logger.Error($"2. Check AMS Access Token is correct\n");
-                    bRunningOK = false;
-                    Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);
+                    bRunningOK = false;  // Flag to indicate that there was an error
+                    Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);  //Wait a bit  and then try again
                 }
-            } while (!bRunningOK);
+            } while (!bRunningOK);  // Continue the loop until the server can be contacted
         }
 
 
-
+        // Start the thread to listen to incoming update notifications
         public void StartMQListener() {
             try {
                 this.startListenLoop = true;
@@ -117,34 +131,40 @@ namespace DOH_AMSTowingWidget {
                 };
                 receiveThread.Start();
             } catch (Exception ex) {
+                Logger.Error("Error starting notification queue listener");
                 Logger.Error(ex.Message);
             }
         }
 
+        //Stop the loop listening to incoming update notifications
         public void StopMQListener() {
             try {
                 this.startListenLoop = false;
                 receiveThread.Abort();
             } catch (Exception ex) {
+                Logger.Error("Error stopping notification queue listener");
                 Logger.Error(ex.Message);
             }
         }
 
+
+        // Listen for incoming update notifications
         private void ListenToQueue() {
 
 
             while (startListenLoop) {
 
-                //Put it in a Try/Catch so on bad message doesn't or reading problem stop the system
+                //Put it in a Try/Catch so on bad message or reading problem dont stop the system
                 try {
                     Logger.Trace("Waiting for notification message");
                     using (Message msg = recvQueue.Receive()) {
                         
                         Logger.Trace("Message Received");
-                        StreamReader reader = new StreamReader(msg.BodyStream);
-                        string xml = reader.ReadToEnd();               
-                        Task.Run(() => ProcessMessage(xml, RandomString(10)));
-
+                        string xml;
+                        using (StreamReader reader = new StreamReader(msg.BodyStream)) {
+                            xml = reader.ReadToEnd();
+                        }
+                        ProcessMessage(xml, RandomString(10));
                     }
                 } catch (Exception e) {
                     Logger.Error("Error in Reciveving and Processing Notification Message");
@@ -165,23 +185,20 @@ namespace DOH_AMSTowingWidget {
                 if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification")) {
                     XElement towNode = xmlRoot.Element("Notification").Element("Towing");
                     towManager.SetTowEvent(towNode);
-                    Logger.Trace($"Message Processed {id}");
+                    Logger.Trace($"Update or Created Message Processed {id}");
                     return;
                 }
 
                 if (xml.Contains("TowingDeletedNotification")) {
                     XElement towNode = xmlRoot.Element("Notification").Element("Towing");
-                    towManager.RemoveTow(towNode.Element("TowingId").Value);
-                    Logger.Trace($"Message Processed {id}");
+                    towManager.RemoveTowAndClear(towNode.Element("TowingId").Value);
+                    Logger.Trace($"Delete Message Processed {id}");
                     return;
                 }
             } catch (Exception e) {
                 Logger.Trace($"Message Processing Error {id}");
                 Logger.Trace(e.Message);
             }
-           
-
-
         }
 
         public static string RandomString(int length) {

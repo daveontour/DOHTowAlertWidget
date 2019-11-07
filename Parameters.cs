@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Version RC 1.0
+
 namespace DOH_AMSTowingWidget {
 
     /*

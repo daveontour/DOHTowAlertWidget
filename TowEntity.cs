@@ -4,6 +4,8 @@ using System.Timers;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
+//Version RC 1.0
+
 namespace DOH_AMSTowingWidget {
     // Hold all the information about each towing in a convenient package
     class TowEntity {
@@ -12,6 +14,7 @@ namespace DOH_AMSTowingWidget {
         public DateTime schedTime;
         public bool isActualSet = false;
         public List<FlightNode> flights = new List<FlightNode>(); // The flights associated with the the tow, might be arrival, departure or both
+        public string fltStr = "";
 
         public TowEntity(XElement xmlNode) {
             this.towID = xmlNode.Element("TowingId").Value;
@@ -23,7 +26,9 @@ namespace DOH_AMSTowingWidget {
             // Get the flight information for the flights connected to the tow
             IEnumerable<XElement> flightNodes = xmlNode.Element("FlightIdentifiers").Elements("FlightIdentifier");
             foreach (XElement fltNode in flightNodes) {
-                flights.Add(new FlightNode(fltNode));
+                FlightNode fn = new FlightNode(fltNode);
+                flights.Add(fn);
+                fltStr += fn.airlineCode+fn.fltNumber + "  ";
             }
         }
 

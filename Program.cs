@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Topshelf;
 
+
+
+//Version RC 1.0
+
 namespace DOH_AMSTowingWidget {
     class Program {
 
