@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 1.0
+//Version RC 2.0
 
 namespace DOH_AMSTowingWidget {
     class TowEventManager {
@@ -167,18 +167,12 @@ namespace DOH_AMSTowingWidget {
                 // The Arrival flight (if any)
                 FlightId flightID = tow.GetArrivalFlightID();
 
-
-
                 bool callOK = true;
                 do {
                     try {
                         if (flightID != null) {
-                            if (IsUpdateRequired(flightID, alertStatus)) {
                                 client.UpdateFlight(Parameters.TOKEN, flightID, val);
                                 Logger.Trace($"Update Written to AMS (Arrival Flight)  {tow.towID}");
-                            } else {
-                                Logger.Trace($"Update to Not Required AMS (Arrival Flight)  {tow.towID}");
-                            }
                         } else {
                             Logger.Trace($"No Arrival Flight for:  {tow.towID}");
                         }
@@ -200,12 +194,8 @@ namespace DOH_AMSTowingWidget {
                 do {
                     try {
                         if (flightID != null) {
-                            if (IsUpdateRequired(flightID, alertStatus)) {
                                 client.UpdateFlight(Parameters.TOKEN, flightID, val);
                                 Logger.Trace($"Update Written to AMS (Departure Flight)  {tow.towID}");
-                            } else {
-                                Logger.Trace($"Update to Not Required AMS (Departure Flight)  {tow.towID}");
-                            }
                         } else {
                             Logger.Trace($"No Departure Flight for:  {tow.towID}");
                         }
@@ -221,32 +211,5 @@ namespace DOH_AMSTowingWidget {
                 } while (!callOK);
             }
         }
-
-
-        // Determine if the value is already set correctly
-        private bool IsUpdateRequired(FlightId flightID, string alertStatus) {
-
-            if (flightID == null) {
-                return true;
-            }
-            using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient()) {
-
-                try {
-                    XmlElement flightNode = client.GetFlight(Parameters.TOKEN, flightID);
-                    XmlNode x = flightNode.SelectSingleNode($"//*[@propertyName='{Parameters.ALERT_FIELD}']");
-                    if (x != null) {
-                         if (alertStatus == x.InnerText) {
-                            Logger.Trace("Update of Status NOT Required");
-                            return false;
-                        }
-                    }
-                    Logger.Trace("Update of Status Required");
-                    return true;
-                } catch {
-                    // If there was a comms problem, deal with it in the preceeding call
-                    return true;
-                }
-            }
-        }
-    }
+     }
 }

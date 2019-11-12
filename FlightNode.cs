@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-//Version RC 1.0
+//Version RC 2.0
 
 namespace DOH_AMSTowingWidget {
 
