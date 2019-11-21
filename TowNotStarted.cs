@@ -191,6 +191,8 @@ namespace DOH_AMSTowingWidget {
 
                 if (xml.Contains("TowingDeletedNotification")) {
                     XElement towNode = xmlRoot.Element("Notification").Element("Towing");
+                    TowEntity tow = new TowEntity(towNode);
+                    towManager.RemoveTowAndClear(tow);
                     towManager.RemoveTowAndClear(towNode.Element("TowingId").Value);
                     Logger.Trace($"Delete Message Processed {id}");
                     return;

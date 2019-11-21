@@ -19,5 +19,16 @@ namespace DOH_AMSTowingWidget {
             this.fltNumber = node.Element("FlightNumber").Value;
             this.schedDate = node.Element("ScheduledDate").Value;
         }
+
+        public bool Equals(FlightNode node) {
+            if (node.nature == this.nature 
+                && node.airlineCode == this.airlineCode
+                && node.fltNumber == this.fltNumber
+                && node.schedDate == this.schedDate) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

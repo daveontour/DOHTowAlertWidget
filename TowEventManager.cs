@@ -28,8 +28,8 @@ namespace DOH_AMSTowingWidget {
 
             // The constructor of TowEntity parses out the key data and sets a flag
             // if either ActualStart or ActualEnd is set.
-            if (tow.isActualSet) {
-                // The ActualTime is set, so the the flights should be updated that
+            if (tow.isAllActualSet) {
+                // The ActualTimes are set, so the the flights should be updated that
                 // the tow has started and any timer task should be cancelled and the 
                 // TowEntity removed from the map
                 RemoveTowAndClear(tow, false);
@@ -37,45 +37,87 @@ namespace DOH_AMSTowingWidget {
 
             } else {
 
+
                 // Remove the current event if it is already there
                 RemoveTow(tow.towID, false);
 
-                //Create the Timer Task
-                double timeToTrigger = (tow.schedTime - DateTime.Now).TotalMilliseconds;
 
-                // Add the Grace time, that is the amount of time *after* the scheduled start that the alert will be raised. 
-                timeToTrigger += Parameters.GRACE_PERIOD;
+                // Add the Tow Entity to the towMap (needs to be in the map here so it is checks itself when testing if it is set.
+                towMap.Add(tow.towID, tow);
 
-                // The tow may have previously been in the past
-                // and now is in the future, so clear any existing alerts 
-                // if they should be in the future
-                if (timeToTrigger > 10000) {
-                    SendAlertStatusClear(tow);
-                }
+                // Start Timer
+                if (!tow.isActualStartSet){
+                    //Create the Start Timer Task
+                    double timeToStartTrigger = (tow.schedStartTime - DateTime.Now).TotalMilliseconds;
 
-                //It may have been in the past, so schedule it straight away
-                timeToTrigger = Math.Max(timeToTrigger, 1000);
-                Timer alertTimer = new Timer() {
-                    AutoReset = false,
-                    Interval = timeToTrigger
-                };
+                    // Add the Grace time, that is the amount of time *after* the scheduled start that the alert will be raised. 
+                    timeToStartTrigger += Parameters.GRACE_PERIOD;
 
-                // The code to execute when the alert time happend
-                alertTimer.Elapsed += (source, eventArgs) =>
-                {
-                    Logger.Info($"Timer fired: {tow.towID }, Flights: {tow.fltStr}");
+                    // The tow may have previously been in the past
+                    // and now is in the future, so clear any existing alerts 
+                    // if they should be in the future
+                    if (timeToStartTrigger > 10000) {
+                        SendAlertStatus_Conditionlly_Clear(tow);
+                    }
+
+                    //It may have been in the past, so schedule it straight away
+                    timeToStartTrigger = Math.Max(timeToStartTrigger, 1000);
+                    Timer alertStartTimer = new Timer() {
+                        AutoReset = false,
+                        Interval = timeToStartTrigger
+                    };
+
+                    // The code to execute when the alert time happend
+                    alertStartTimer.Elapsed += (source, eventArgs) =>
+                    {
+                        Logger.Info($"Timer fired: {tow.towID }, Flights: {tow.fltStr}");
                     // Call the method to set the custom field on AMS
                     SendAlertStatusSet(tow);
-                };
+                    };
 
-                // Initiate the timer
-                alertTimer.Start();
+                    // Initiate the timer
+                    alertStartTimer.Start();
+                    // Add the timer to the TowEntity
+                    tow.alertStartTimer = alertStartTimer;
 
-                // Add the timer to the TowEntity
-                tow.alertTimer = alertTimer;
+                }
 
-                // Add the Tow Entity to the towMap
-                towMap.Add(tow.towID, tow);
+                // End Timer
+                if (!tow.isActualEndSet) {
+                    //Create the Start Timer Task
+                    double timeToStartTrigger = (tow.schedEndTime - DateTime.Now).TotalMilliseconds;
+
+                    // Add the Grace time, that is the amount of time *after* the scheduled start that the alert will be raised. 
+                    timeToStartTrigger += Parameters.GRACE_PERIOD;
+
+                    // The tow may have previously been in the past
+                    // and now is in the future, so clear any existing alerts 
+                    // if they should be in the future
+                    if (timeToStartTrigger > 10000) {
+                        SendAlertStatus_Conditionlly_Clear(tow);
+                    }
+
+                    //It may have been in the past, so schedule it straight away
+                    timeToStartTrigger = Math.Max(timeToStartTrigger, 1000);
+                    Timer alertEndTimer = new Timer() {
+                        AutoReset = false,
+                        Interval = timeToStartTrigger
+                    };
+
+                    // The code to execute when the alert time happend
+                    alertEndTimer.Elapsed += (source, eventArgs) =>
+                    {
+                        Logger.Info($"Timer fired: {tow.towID }, Flights: {tow.fltStr}");
+                        // Call the method to set the custom field on AMS
+                        SendAlertStatusSet(tow);
+                    };
+
+                    // Initiate the timer
+                    alertEndTimer.Start();
+                    // Add the timer to the TowEntity
+                    tow.alertEndTimer = alertEndTimer;
+
+                }
 
                 return tow;
             }
@@ -100,7 +142,7 @@ namespace DOH_AMSTowingWidget {
                     TowEntity tow = towMap[key];
                     Logger.Info($"Removing Tow Event {tow.ToString()}, Flights {tow.fltStr}");
                     tow.StopTimer();
-             //       SendAlertStatusClear(tow);
+                    //       SendAlertStatusClear(tow);
                     towMap.Remove(key);
                 } catch (Exception e) {
                     if (logError) {
@@ -118,7 +160,7 @@ namespace DOH_AMSTowingWidget {
                     TowEntity towExisting = towMap[key];
                     Logger.Info($"Removing Tow Event {towExisting.ToString()}, Flights {towExisting.fltStr}");
                     towExisting.StopTimer();
-                    SendAlertStatusClear(towExisting);
+                    SendAlertStatus_Conditionlly_Clear(towExisting);
                     towMap.Remove(key);
                 } catch (Exception e) {
                     if (logError) {
@@ -133,23 +175,47 @@ namespace DOH_AMSTowingWidget {
                 try {
                     TowEntity towExisting = towMap[tow.towID];
                     Logger.Trace($"Removing Tow Event {towExisting.ToString()}");
+                    SendAlertStatus_Conditionlly_Clear(towExisting);
                     towExisting.StopTimer();
                     towMap.Remove(tow.towID);
                 } catch (Exception e) {
+                    SendAlertStatus_Conditionlly_Clear(tow);
                     if (logError) {
                         Logger.Error(e.Message);
                     }
                 }
             }
-            SendAlertStatusClear(tow);
+            SendAlertStatus_Conditionlly_Clear(tow);
         }
 
-        public void SendAlertStatusClear(TowEntity tow) {
-            SendAlertStatus(tow, "false");
+        public void SendAlertStatus_Conditionlly_Clear(TowEntity tow) {
+
+            //First check if there are any other tow events for the flights which would require the status to still be set
+
+            if (SetForOtherTows(tow)) {
+                SendAlertStatus(tow, "true");
+            } else {
+                SendAlertStatus(tow, "false");
+            }
         }
         public void SendAlertStatusSet(TowEntity tow) {
             SendAlertStatus(tow, "true");
         }
+
+        public bool SetForOtherTows(TowEntity tow) {
+
+            // Go through the other tow events and see if any of them are alerted for the flights in this tow.
+            foreach(FlightNode flight in tow.flights) {
+                foreach (TowEntity t in towMap.Values) {
+                    if (t.isActiveForFlight(flight)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private void SendAlertStatus(TowEntity tow, string alertStatus) {
 
             // The parameter in the Update Flight request is an array of "PropertyValue"s. which have the AMS external field name 
@@ -171,8 +237,8 @@ namespace DOH_AMSTowingWidget {
                 do {
                     try {
                         if (flightID != null) {
-                                client.UpdateFlight(Parameters.TOKEN, flightID, val);
-                                Logger.Trace($"Update Written to AMS (Arrival Flight)  {tow.towID}");
+                            client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            Logger.Trace($"Update Written to AMS (Arrival Flight)  {tow.towID}");
                         } else {
                             Logger.Trace($"No Arrival Flight for:  {tow.towID}");
                         }
@@ -194,8 +260,8 @@ namespace DOH_AMSTowingWidget {
                 do {
                     try {
                         if (flightID != null) {
-                                client.UpdateFlight(Parameters.TOKEN, flightID, val);
-                                Logger.Trace($"Update Written to AMS (Departure Flight)  {tow.towID}");
+                            client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            Logger.Trace($"Update Written to AMS (Departure Flight)  {tow.towID}");
                         } else {
                             Logger.Trace($"No Departure Flight for:  {tow.towID}");
                         }
@@ -211,5 +277,5 @@ namespace DOH_AMSTowingWidget {
                 } while (!callOK);
             }
         }
-     }
+    }
 }

@@ -10,18 +10,25 @@ namespace DOH_AMSTowingWidget {
     // Hold all the information about each towing in a convenient package
     class TowEntity {
         public string towID;
-        public Timer alertTimer;
-        public DateTime schedTime;
-        public bool isActualSet = false;
+        public Timer alertStartTimer;
+        public Timer alertEndTimer;
+        public DateTime schedStartTime;
+        public DateTime schedEndTime;
+        public bool isAllActualSet = false;
+        public bool isActualStartSet = false;
+        public bool isActualEndSet = false;
         public List<FlightNode> flights = new List<FlightNode>(); // The flights associated with the the tow, might be arrival, departure or both
         public string fltStr = "";
 
         public TowEntity(XElement xmlNode) {
             this.towID = xmlNode.Element("TowingId").Value;
-            this.schedTime = Convert.ToDateTime(xmlNode.Element("ScheduledStart").Value);
+            this.schedStartTime = Convert.ToDateTime(xmlNode.Element("ScheduledStart").Value);
+            this.schedEndTime = Convert.ToDateTime(xmlNode.Element("ScheduledEnd").Value);
 
             // Flag to indicate if an ActualStart or ActualEnd has been entered
-            this.isActualSet = xmlNode.Element("ActualStart").Value != "" || xmlNode.Element("ActualEnd").Value != "";
+            this.isActualStartSet = xmlNode.Element("ActualStart").Value != "";
+            this.isActualEndSet =  xmlNode.Element("ActualEnd").Value != "";
+            this.isAllActualSet = this.isActualStartSet && this.isActualEndSet;
 
             // Get the flight information for the flights connected to the tow
             IEnumerable<XElement> flightNodes = xmlNode.Element("FlightIdentifiers").Elements("FlightIdentifier");
@@ -32,23 +39,71 @@ namespace DOH_AMSTowingWidget {
             }
         }
 
-        public new string ToString() {
-            return $"TowID: {towID},  ScheduleTime: {schedTime}, isActualSet: {isActualSet}";
+        public bool isAlerted() {
+
+            if (DateTime.Compare(DateTime.Now, this.schedStartTime) > 0  && !isActualStartSet) {
+                return true;
+            }
+
+            if (DateTime.Compare(DateTime.Now, this.schedEndTime) > 0 && (!isActualStartSet || !isActualEndSet)) {
+                return true;
+            }
+
+            return false;
         }
 
-        public void StopTimer() {
+        public bool isActiveForFlight(FlightNode flt) {
+
+            foreach (FlightNode f in flights) {
+                if (f.Equals(flt) && this.isAlerted()) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public new string ToString() {
+            return $"TowID: {towID},  ScheduleStartTime: {schedStartTime},  isActualStartSet: {isActualStartSet},  ScheduleEndTime: {schedEndTime},  isActualEndSet: {isActualEndSet}";
+        }
+
+        public void StopStartTimer() {
             try {
-                if (alertTimer != null) {
-                    alertTimer.Stop();
-                    alertTimer.Dispose();
-                    alertTimer = null;
+                if (alertStartTimer != null) {
+                    alertStartTimer.Stop();
+                    alertStartTimer.Dispose();
+                    alertStartTimer = null;
                 }
             } catch (Exception e) {
-                TowEventManager.Logger.Error("Error stopping alert timer. See next message");
+                TowEventManager.Logger.Error("Error stopping start alert timer. See next message");
                 TowEventManager.Logger.Error(e.Message);
             }
         }
-
+        public void StopEndTimer() {
+            try {
+                if (alertEndTimer != null) {
+                    alertEndTimer.Stop();
+                    alertEndTimer.Dispose();
+                    alertEndTimer = null;
+                }
+            } catch (Exception e) {
+                TowEventManager.Logger.Error("Error stopping end alert timer. See next message");
+                TowEventManager.Logger.Error(e.Message);
+            }
+        }
+        public void StopTimer() {
+            try {
+                StopStartTimer();
+            } catch (Exception e) {
+                TowEventManager.Logger.Error("Error stopping alert timers. See next message");
+                TowEventManager.Logger.Error(e.Message);
+            }
+            try {
+                StopEndTimer();
+            } catch (Exception e) {
+                TowEventManager.Logger.Error("Error stopping alert timers. See next message");
+                TowEventManager.Logger.Error(e.Message);
+            }
+        }
         public FlightId GetArrivalFlightID() {
             return GetFlightID(true);
         }
