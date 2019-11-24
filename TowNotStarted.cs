@@ -9,8 +9,10 @@ using System.Xml.Linq;
 using System.Messaging;
 using System.Threading;
 using System.IO;
+using WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv;
+using System.Xml;
 
-//Version RC 2.0
+//Version RC 3.0
 
 namespace DOH_AMSTowingWidget {
     class TowNotStarted {
@@ -34,6 +36,8 @@ namespace DOH_AMSTowingWidget {
             t.Wait();
 
             Logger.Trace("Initial Population of TowEvent Cache Completed");
+
+            UpdateFlights();
 
 
             //// Set the timer to regularly do a complete refresh of the towing cache
@@ -201,6 +205,44 @@ namespace DOH_AMSTowingWidget {
                 Logger.Trace($"Message Processing Error {id}");
                 Logger.Trace(e.Message);
             }
+        }
+
+        private void UpdateFlights() {
+            // The status may have changed from "Alerted" to "Non Alaerted" while the
+            // widget was not running, so get all the flights for the last 24 hours
+            // and clear the alert if needed
+            // Flights that do require an alerted will have been taken care of during the 
+            // retrieval of the tows
+
+            try {
+
+                using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient()) {
+
+                    try {
+                        XmlElement flightsElement = client.GetFlights(Parameters.TOKEN, DateTime.Now.AddDays(-1.0), DateTime.Now, Parameters.APT_CODE, AirportIdentifierType.IATACode);
+
+                        XmlNamespaceManager nsmgr = new XmlNamespaceManager(flightsElement.OwnerDocument.NameTable);
+                        nsmgr.AddNamespace("ams", "http://www.sita.aero/ams6-xml-api-datatypes");
+
+                        XmlNodeList fls = flightsElement.SelectNodes("//ams:Flight/ams:FlightId", nsmgr);
+                        foreach (XmlNode fl in fls) {
+                            FlightNode fn = new FlightNode(fl, nsmgr);
+                            if (!towManager.SetForFlight(fn)) {
+                                Logger.Info($"Clearing for {fn.ToString()}");
+                                towManager.SendAlertStatus(fn, "false");
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        Logger.Error(e.Message);
+                        Logger.Error(e);
+                    }
+                }
+            } catch (Exception e) {
+                Logger.Error(e.Message);
+                Logger.Error(e);
+            }
+
         }
 
         public static string RandomString(int length) {

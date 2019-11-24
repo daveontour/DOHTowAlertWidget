@@ -4,7 +4,7 @@ using System.Timers;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 2.0
+//Version RC 3.0
 
 namespace DOH_AMSTowingWidget {
     // Hold all the information about each towing in a convenient package
@@ -28,6 +28,8 @@ namespace DOH_AMSTowingWidget {
             // Flag to indicate if an ActualStart or ActualEnd has been entered
             this.isActualStartSet = xmlNode.Element("ActualStart").Value != "";
             this.isActualEndSet =  xmlNode.Element("ActualEnd").Value != "";
+
+            // Flag to indicate whether both the start and end actual times are set
             this.isAllActualSet = this.isActualStartSet && this.isActualEndSet;
 
             // Get the flight information for the flights connected to the tow
@@ -39,12 +41,15 @@ namespace DOH_AMSTowingWidget {
             }
         }
 
+        // Returns boolean to indicate whether this tow event should be alerted
         public bool isAlerted() {
 
+            // Now is after Schedule StartTime and no Actual Time Set
             if (DateTime.Compare(DateTime.Now, this.schedStartTime) > 0  && !isActualStartSet) {
                 return true;
             }
 
+            // Now is after Schedule EndTime and no Actual Time Set
             if (DateTime.Compare(DateTime.Now, this.schedEndTime) > 0 && (!isActualStartSet || !isActualEndSet)) {
                 return true;
             }
@@ -52,6 +57,7 @@ namespace DOH_AMSTowingWidget {
             return false;
         }
 
+        // Checks for a particular flight if the event is alerted
         public bool isActiveForFlight(FlightNode flt) {
 
             foreach (FlightNode f in flights) {

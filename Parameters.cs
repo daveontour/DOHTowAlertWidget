@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//Version RC 2.0
+//Version RC 3.0
 
 namespace DOH_AMSTowingWidget {
 

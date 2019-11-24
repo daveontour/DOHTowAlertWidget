@@ -9,7 +9,7 @@ using Topshelf;
 
 
 
-//Version RC 2.0
+//Version RC 3.0
 
 namespace DOH_AMSTowingWidget {
     class Program {
@@ -44,9 +44,9 @@ namespace DOH_AMSTowingWidget {
                  * This is useful is multiple instance of the service are run from different directories
                  */
                 NameValueCollection appSettings = ConfigurationManager.AppSettings;
-                string serviceName = string.IsNullOrEmpty(appSettings["ServiceName"]) ? "SITAAMSTowNotStarted" : appSettings["ServiceName"];
-                string serviceDisplayName = string.IsNullOrEmpty(appSettings["ServiceDisplayName"]) ? "SITA AMS - Tow Not Started Utility Service" : appSettings["ServiceDisplayName"];
-                string serviceDescription = string.IsNullOrEmpty(appSettings["ServiceDescription"]) ? "Writes to a custom field on the arrival and departure flight if a towing has not started by the schedued time" : appSettings["ServiceDescription"];
+                string serviceName = string.IsNullOrEmpty(appSettings["ServiceName"]) ? "SITA MEIA - Towing Actual Not Available" : appSettings["ServiceName"];
+                string serviceDisplayName = string.IsNullOrEmpty(appSettings["ServiceDisplayName"]) ? "SITA MEIA - AMS Tow Actual Not Available Utility Service" : appSettings["ServiceDisplayName"];
+                string serviceDescription = string.IsNullOrEmpty(appSettings["ServiceDescription"]) ? "Writes to a custom field on the arrival and departure flight if a towing actual has not been entered and 'now' is past the scheduled time" : appSettings["ServiceDescription"];
 
                 x.SetServiceName(serviceName);
                 x.SetDisplayName(serviceDisplayName);

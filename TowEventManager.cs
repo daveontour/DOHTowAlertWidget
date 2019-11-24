@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 2.0
+//Version RC 3.0
 
 namespace DOH_AMSTowingWidget {
     class TowEventManager {
@@ -46,7 +46,7 @@ namespace DOH_AMSTowingWidget {
                 towMap.Add(tow.towID, tow);
 
                 // Start Timer
-                if (!tow.isActualStartSet){
+                if (!tow.isActualStartSet) {
                     //Create the Start Timer Task
                     double timeToStartTrigger = (tow.schedStartTime - DateTime.Now).TotalMilliseconds;
 
@@ -71,8 +71,8 @@ namespace DOH_AMSTowingWidget {
                     alertStartTimer.Elapsed += (source, eventArgs) =>
                     {
                         Logger.Info($"Timer fired: {tow.towID }, Flights: {tow.fltStr}");
-                    // Call the method to set the custom field on AMS
-                    SendAlertStatusSet(tow);
+                        // Call the method to set the custom field on AMS
+                        SendAlertStatusSet(tow);
                     };
 
                     // Initiate the timer
@@ -189,12 +189,17 @@ namespace DOH_AMSTowingWidget {
         }
 
         public void SendAlertStatus_Conditionlly_Clear(TowEntity tow) {
+            // The particular tow event is potentially clear, but there may be other
+            // tow events associated with this flight which are not clear.
+            // so we need to check the other tow events to see if they are applicable.
 
             //First check if there are any other tow events for the flights which would require the status to still be set
 
             if (SetForOtherTows(tow)) {
+                // Other tow events were found for this flight, so make sure the flag is set
                 SendAlertStatus(tow, "true");
             } else {
+                // No other tow events were set for the flights in this tow event, so the alert can be cleared. 
                 SendAlertStatus(tow, "false");
             }
         }
@@ -205,7 +210,7 @@ namespace DOH_AMSTowingWidget {
         public bool SetForOtherTows(TowEntity tow) {
 
             // Go through the other tow events and see if any of them are alerted for the flights in this tow.
-            foreach(FlightNode flight in tow.flights) {
+            foreach (FlightNode flight in tow.flights) {
                 foreach (TowEntity t in towMap.Values) {
                     if (t.isActiveForFlight(flight)) {
                         return true;
@@ -213,8 +218,75 @@ namespace DOH_AMSTowingWidget {
                 }
             }
 
+            // None found
             return false;
         }
+
+        // Check alert status for a particular flight
+        public bool SetForFlight(FlightNode flt) {
+
+            // Go through the other tow events and see if any of them are alerted for the flights in this tow.
+            foreach (TowEntity t in towMap.Values) {
+                if (t.isActiveForFlight(flt)) {
+                    return true;
+                }
+            }
+
+            // None found
+            return false;
+        }
+
+
+        // Set the alert for a individual flight
+        public void SendAlertStatus(FlightNode flt, string alertStatus) {
+
+            // The parameter in the Update Flight request is an array of "PropertyValue"s. which have the AMS external field name 
+            // of the field to update and the value itself (booleans are sent as strings with values "true", "false" or "" for unset.
+
+            PropertyValue pv = new PropertyValue {
+                propertyNameField = Parameters.ALERT_FIELD,
+                valueField = alertStatus
+            };
+            PropertyValue[] val = { pv };
+
+            // The web services client which does the work talking to the AMS WebServices EndPoint
+            using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient()) {
+
+                LookupCode apCode = new LookupCode();
+                apCode.codeContextField = CodeContext.ICAO;
+                apCode.valueField = Parameters.APT_CODE_ICAO;
+                LookupCode[] ap = { apCode };
+
+                LookupCode alCode = new LookupCode();
+                alCode.codeContextField = CodeContext.IATA;
+                alCode.valueField = flt.airlineCode; ;
+                LookupCode[] al = { alCode };
+
+                FlightId flightID = new FlightId();
+                flightID.flightKindField = flt.nature == "Arrival" ? FlightKind.Arrival : FlightKind.Departure;
+                flightID.airportCodeField = ap;
+                flightID.airlineDesignatorField = al;
+                flightID.scheduledDateField = Convert.ToDateTime(flt.schedDate);
+                flightID.flightNumberField = flt.fltNumber;
+
+                bool callOK = true;
+                do {
+                    try {
+                        if (flightID != null) {
+                            client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                        }
+                    } catch (Exception e) {
+                        Logger.Error("Failed to update the custom field");
+                        Logger.Error(e.Message);
+                        Logger.Error($"1. Check AMS Web API Server is running ");
+                        Logger.Error($"2. Check AMS Access Token is correct\n");
+                        System.Threading.Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);
+                        callOK = false;
+                    }
+                } while (!callOK);
+            }
+        }
+
 
         private void SendAlertStatus(TowEntity tow, string alertStatus) {
 

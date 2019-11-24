@@ -1,6 +1,7 @@
-﻿using System.Xml.Linq;
+﻿using System.Xml;
+using System.Xml.Linq;
 
-//Version RC 2.0
+//Version RC 3.0
 
 namespace DOH_AMSTowingWidget {
 
@@ -10,6 +11,17 @@ namespace DOH_AMSTowingWidget {
         public string airlineCode;
         public string fltNumber;
         public string schedDate;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+
+        // The "node" parameter is one the XElement of the "FlightIndentifier" element of the Towing message 
+        public FlightNode(XmlNode node, XmlNamespaceManager nsmgr) {
+  
+            this.nature = node.SelectSingleNode(".//ams:FlightKind", nsmgr).InnerText;
+            this.airlineCode = node.SelectSingleNode(".//ams:AirlineDesignator[@codeContext='IATA']", nsmgr).InnerText;
+            this.fltNumber = node.SelectSingleNode(".//ams:FlightNumber", nsmgr).InnerText;
+            this.schedDate = node.SelectSingleNode(".//ams:ScheduledDate", nsmgr).InnerText;
+        }
 
         // The "node" parameter is one the XElement of the "FlightIndentifier" element of the Towing message 
         public FlightNode(XElement node) {
@@ -20,6 +32,7 @@ namespace DOH_AMSTowingWidget {
             this.schedDate = node.Element("ScheduledDate").Value;
         }
 
+        // Is the supplied node referring to the same flight as this node?
         public bool Equals(FlightNode node) {
             if (node.nature == this.nature 
                 && node.airlineCode == this.airlineCode
@@ -29,6 +42,11 @@ namespace DOH_AMSTowingWidget {
             } else {
                 return false;
             }
+        }
+
+        public new string ToString() {
+            return $"AirlineCode: {airlineCode}, Flight Number: {fltNumber}, Nature: {nature}, Scheuled Date: {schedDate}";
+
         }
     }
 }
