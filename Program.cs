@@ -9,7 +9,7 @@ using Topshelf;
 
 
 
-//Version RC 3.0
+//Version RC 3.5
 
 namespace DOH_AMSTowingWidget {
     class Program {

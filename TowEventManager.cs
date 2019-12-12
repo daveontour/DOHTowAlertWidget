@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 3.0
+//Version RC 3.5
 
 namespace DOH_AMSTowingWidget {
     class TowEventManager {
@@ -70,7 +70,7 @@ namespace DOH_AMSTowingWidget {
                     // The code to execute when the alert time happend
                     alertStartTimer.Elapsed += (source, eventArgs) =>
                     {
-                        Logger.Info($"Timer fired: {tow.towID }, Flights: {tow.fltStr}");
+                        Logger.Info($"Timer fired (Actual Start): {tow.towID }, Flights: {tow.fltStr}");
                         // Call the method to set the custom field on AMS
                         SendAlertStatusSet(tow);
                     };
@@ -107,7 +107,7 @@ namespace DOH_AMSTowingWidget {
                     // The code to execute when the alert time happend
                     alertEndTimer.Elapsed += (source, eventArgs) =>
                     {
-                        Logger.Info($"Timer fired: {tow.towID }, Flights: {tow.fltStr}");
+                        Logger.Info($"Timer fired  (Actual End): {tow.towID }, Flights: {tow.fltStr}");
                         // Call the method to set the custom field on AMS
                         SendAlertStatusSet(tow);
                     };

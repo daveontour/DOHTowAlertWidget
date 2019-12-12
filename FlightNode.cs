@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using System.Xml.Linq;
 
-//Version RC 3.0
+//Version RC 3.5
 
 namespace DOH_AMSTowingWidget {
 

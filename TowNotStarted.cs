@@ -12,7 +12,7 @@ using System.IO;
 using WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv;
 using System.Xml;
 
-//Version RC 3.0
+//Version RC 3.5
 
 namespace DOH_AMSTowingWidget {
     class TowNotStarted {
@@ -27,17 +27,41 @@ namespace DOH_AMSTowingWidget {
         private readonly static Random random = new Random();  
         public TowNotStarted() { }
 
-        public void Start() {
-
+        public bool Start() {
+            Logger.Info("TowNotStarted Alert Service Starting");
+            Thread thr = new Thread(new ThreadStart(StartThread));
+            thr.Start();
             Logger.Info("TowNotStarted Alert Service Started");
+            return true;
+        }
+        public void StartThread() {
+
+            Logger.Info("TowNotStarted Alert Initialisation Starting");
 
             // Initially Populate the Towing Cache at startup 
+            Logger.Info("Starting Initial Population of TowEvent Cache");
             var t = Task.Run(() => GetCurrentTowingsAsync());
             t.Wait();
+            Logger.Info("Completeted Initial Population of TowEvent Cache");
 
-            Logger.Trace("Initial Population of TowEvent Cache Completed");
+            
+            //Start Listener for incoming towing notifications
+            recvQueue = new MessageQueue(Parameters.RECVQ);
+            StartMQListener();
+            Logger.Info($"Started Notification Queue Listener on queue: {Parameters.RECVQ}");
 
-            UpdateFlights();
+
+            // Optionally process flights 
+            // The status may have changed from "Alerted" to "Non Alaerted" while the
+            // widget was not running, so get all the flights for the last 24 hours
+            // and clear the alert if needed
+            // Flights that do require an alerted will have been taken care of during the 
+            // retrieval of the tows
+            if (Parameters.STARTUP_FLIGHT_PROCESSING) {
+                Logger.Info(">>>>>>> Starting Existing Flight Processing");
+                UpdateFlights();
+                Logger.Info("<<<<<<< Finished Existing Flight Processing");
+            }
 
 
             //// Set the timer to regularly do a complete refresh of the towing cache
@@ -52,21 +76,16 @@ namespace DOH_AMSTowingWidget {
                 resetTimer.Start();
             };
             resetTimer.Start();
+            Logger.Info($"Cache Reset timer set up for {Parameters.REFRESH_INTERVAL}ms");
 
-            Logger.Trace($"Cache Reset timer set up for {Parameters.REFRESH_INTERVAL}ms");
-
-            //Start Listener for incoming towing notifications
-            recvQueue = new MessageQueue(Parameters.RECVQ);
-            StartMQListener();
-
-            Logger.Trace($"Started Notification Queue Listener on queue: {Parameters.RECVQ}");
-
+            Logger.Info("TowNotStarted Alert Initialisation Completed");
         }
 
         public void Stop() {
             Logger.Info("TowNotStarted Alert Service Stopping");
             StopMQListener();
             resetTimer.Stop();
+            Logger.Info("TowNotStarted Alert Service Stopped");
         }
 
         public async Task GetCurrentTowingsAsync() {
@@ -115,8 +134,10 @@ namespace DOH_AMSTowingWidget {
                     }
                     bRunningOK = true;
 
-                } catch (Exception ) {
+                } catch (Exception e) {
                     Logger.Error("Failed to retrieve tow events from the AMS RestAPI Server");
+                    Logger.Error(e.Message);
+                    Logger.Error(e);
                     Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.BASE_URI} ");
                     Logger.Error($"2. Check AMS Access Token is correct\n");
                     bRunningOK = false;  // Flag to indicate that there was an error
@@ -229,7 +250,13 @@ namespace DOH_AMSTowingWidget {
                             FlightNode fn = new FlightNode(fl, nsmgr);
                             if (!towManager.SetForFlight(fn)) {
                                 Logger.Info($"Clearing for {fn.ToString()}");
-                                towManager.SendAlertStatus(fn, "false");
+                                try {
+                                    towManager.SendAlertStatus(fn, "false");
+                                } catch (Exception e) {
+                                    Logger.Error($"Error while processing {fn.ToString()}");
+                                    Logger.Error(e.Message);
+                                    Logger.Error(e);
+                                }
                             }
                         }
 

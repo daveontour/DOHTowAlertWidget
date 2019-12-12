@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//Version RC 3.0
+//Version RC 3.5
 
 namespace DOH_AMSTowingWidget {
 
@@ -31,6 +31,7 @@ namespace DOH_AMSTowingWidget {
         public static double FROM_HOURS;
         public static double TO_HOURS;
         public static int RESTSERVER_RETRY_INTERVAL;
+        public static bool STARTUP_FLIGHT_PROCESSING;
 
 
         static Parameters() { 
@@ -46,6 +47,7 @@ namespace DOH_AMSTowingWidget {
                 RESTSERVER_RETRY_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["ResetServerRetryInterval"]);
                 FROM_HOURS = double.Parse((string)ConfigurationManager.AppSettings["FromHours"]);
                 TO_HOURS = double.Parse((string)ConfigurationManager.AppSettings["ToHours"]);
+                STARTUP_FLIGHT_PROCESSING = bool.Parse((string)ConfigurationManager.AppSettings["StartUpFlightProcessing"]);
             } catch (Exception ex) {
                 Logger.Error(ex.Message);
             }
