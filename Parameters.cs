@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-//Version RC 3.5
+//Version RC 3.7
 
 namespace DOH_AMSTowingWidget {
 
@@ -32,27 +28,34 @@ namespace DOH_AMSTowingWidget {
         public static double TO_HOURS;
         public static int RESTSERVER_RETRY_INTERVAL;
         public static bool STARTUP_FLIGHT_PROCESSING;
+        public static string VERSION = "Version 3.7, 20200111";
+        public static bool DEEPTRACE;
 
 
-        static Parameters() { 
+        static Parameters() {
             try {
                 APT_CODE = (string)ConfigurationManager.AppSettings["IATAAirportCode"];
                 APT_CODE_ICAO = (string)ConfigurationManager.AppSettings["ICAOAirportCode"];
                 TOKEN = (string)ConfigurationManager.AppSettings["Token"];
                 BASE_URI = (string)ConfigurationManager.AppSettings["BaseURI"];
                 RECVQ = (string)ConfigurationManager.AppSettings["NotificationQueue"];
-                ALERT_FIELD  = (string)ConfigurationManager.AppSettings["AlertField"];
+                ALERT_FIELD = (string)ConfigurationManager.AppSettings["AlertField"];
                 GRACE_PERIOD = Int32.Parse((string)ConfigurationManager.AppSettings["GracePeriod"]);
                 REFRESH_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["RefreshInterval"]);
                 RESTSERVER_RETRY_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["ResetServerRetryInterval"]);
                 FROM_HOURS = double.Parse((string)ConfigurationManager.AppSettings["FromHours"]);
                 TO_HOURS = double.Parse((string)ConfigurationManager.AppSettings["ToHours"]);
                 STARTUP_FLIGHT_PROCESSING = bool.Parse((string)ConfigurationManager.AppSettings["StartUpFlightProcessing"]);
+                try {
+                    DEEPTRACE = bool.Parse((string)ConfigurationManager.AppSettings["DeepTrace"]);
+                } catch (Exception) {
+                    DEEPTRACE = false;
+                }
             } catch (Exception ex) {
                 Logger.Error(ex.Message);
             }
         }
 
-        
+
     }
 }

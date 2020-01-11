@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Xml;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 3.5
+//Version RC 3.7
 
 namespace DOH_AMSTowingWidget {
     class TowEventManager {
@@ -21,9 +16,14 @@ namespace DOH_AMSTowingWidget {
         public TowEventManager() { }
 
         public TowEntity SetTowEvent(XElement e) {
-
-            TowEntity tow = new TowEntity(e);
-
+            TowEntity tow;
+            try {
+                tow = new TowEntity(e);
+            } catch (Exception ex) {
+                Logger.Error($"Error Creating Tow Entity:  {ex.Message}");
+                Logger.Error(e.ToString());
+                throw new Exception();
+            }
             Logger.Info($"Set of Tow Event Resquest, begin processing {tow.ToString()}");
 
             // The constructor of TowEntity parses out the key data and sets a flag
@@ -33,6 +33,7 @@ namespace DOH_AMSTowingWidget {
                 // the tow has started and any timer task should be cancelled and the 
                 // TowEntity removed from the map
                 RemoveTowAndClear(tow, false);
+                Logger.Trace($"No need to set Tow Event Timer - All tow events completed for {tow.towID}");
                 return null;
 
             } else {
@@ -273,7 +274,10 @@ namespace DOH_AMSTowingWidget {
                 do {
                     try {
                         if (flightID != null) {
-                            client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            System.Xml.XmlElement res = client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            if (Parameters.DEEPTRACE) {
+                                Logger.Trace($"DEEP TRACE - AMS Update Response =====>>\n{res.OuterXml}\n <<==== DEEP TRACE");
+                            }
                         }
                     } catch (Exception e) {
                         Logger.Error("Failed to update the custom field");
@@ -309,7 +313,10 @@ namespace DOH_AMSTowingWidget {
                 do {
                     try {
                         if (flightID != null) {
-                            client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            System.Xml.XmlElement res = client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            if (Parameters.DEEPTRACE) {
+                                Logger.Trace($"DEEP TRACE - AMS Update Response =====>>\n{res.OuterXml}\n <<==== DEEP TRACE");
+                            }
                             Logger.Trace($"Update Written to AMS (Arrival Flight)  {tow.towID}");
                         } else {
                             Logger.Trace($"No Arrival Flight for:  {tow.towID}");
@@ -332,7 +339,10 @@ namespace DOH_AMSTowingWidget {
                 do {
                     try {
                         if (flightID != null) {
-                            client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            System.Xml.XmlElement res = client.UpdateFlight(Parameters.TOKEN, flightID, val);
+                            if (Parameters.DEEPTRACE) {
+                                Logger.Trace($"DEEP TRACE - AMS Update Response =====>>\n{res.OuterXml}\n <<==== DEEP TRACE");
+                            }
                             Logger.Trace($"Update Written to AMS (Departure Flight)  {tow.towID}");
                         } else {
                             Logger.Trace($"No Departure Flight for:  {tow.towID}");
