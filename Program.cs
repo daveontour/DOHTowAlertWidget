@@ -7,13 +7,16 @@ using Topshelf;
 
 //Version RC 3.7
 
-namespace DOH_AMSTowingWidget {
-    class Program {
+namespace DOH_AMSTowingWidget
+{
+    class Program
+    {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         // Primarily skeleton code for defining the ConsoleApp/Service to be managed by TopShelf
-        static void Main(string[] args) {
+        static void Main(string[] args)
+        {
             var exitCode = HostFactory.Run(x =>
             {
                 /*

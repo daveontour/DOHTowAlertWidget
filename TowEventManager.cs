@@ -6,20 +6,44 @@ using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
 //Version RC 3.7
 
-namespace DOH_AMSTowingWidget {
-    class TowEventManager {
+namespace DOH_AMSTowingWidget
+{
+    class TowEventManager
+    {
 
         public static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly Dictionary<string, TowEntity> towMap = new Dictionary<string, TowEntity>(); // The cache which holds all the towing event entities
+        private readonly Dictionary<string, StandEntity> standMap = new Dictionary<string, StandEntity>();
         private static readonly object padlock = new object();
+        private string standUpdate = @"<FixedResource>
+      <Id>507</Id>
+      <ResourceTypeCode>Stand</ResourceTypeCode>
+      <Name>507</Name>
+      <SortOrder>18</SortOrder>
+      <Area>Apron 500</Area>
+      <CustomFields>
+         <CustomField>
+            <Name>B---_VipOnlyStand</Name>
+            <Value>false</Value>
+            <Type>Boolean</Type>
+         </CustomField>
+      </CustomFields>
+   </FixedResource>";
+
+        public StandManager StandManager { get; set; }
 
         public TowEventManager() { }
 
-        public TowEntity SetTowEvent(XElement e) {
+        public TowEntity SetTowEvent(XElement e)
+        {
             TowEntity tow;
-            try {
+            try
+            {
                 tow = new TowEntity(e);
-            } catch (Exception ex) {
+                Logger.Info($"Tow Entity Created: {tow}");
+            }
+            catch (Exception ex)
+            {
                 Logger.Error($"Error Creating Tow Entity:  {ex.Message}");
                 Logger.Error(e.ToString());
                 throw new Exception();
@@ -28,7 +52,8 @@ namespace DOH_AMSTowingWidget {
 
             // The constructor of TowEntity parses out the key data and sets a flag
             // if either ActualStart or ActualEnd is set.
-            if (tow.isAllActualSet) {
+            if (tow.isAllActualSet)
+            {
                 // The ActualTimes are set, so the the flights should be updated that
                 // the tow has started and any timer task should be cancelled and the 
                 // TowEntity removed from the map
@@ -36,7 +61,9 @@ namespace DOH_AMSTowingWidget {
                 Logger.Trace($"No need to set Tow Event Timer - All tow events completed for {tow.towID}");
                 return null;
 
-            } else {
+            }
+            else
+            {
 
 
                 // Remove the current event if it is already there
@@ -47,7 +74,8 @@ namespace DOH_AMSTowingWidget {
                 towMap.Add(tow.towID, tow);
 
                 // Start Timer
-                if (!tow.isActualStartSet) {
+                if (!tow.isActualStartSet)
+                {
                     //Create the Start Timer Task
                     double timeToStartTrigger = (tow.schedStartTime - DateTime.Now).TotalMilliseconds;
 
@@ -57,13 +85,15 @@ namespace DOH_AMSTowingWidget {
                     // The tow may have previously been in the past
                     // and now is in the future, so clear any existing alerts 
                     // if they should be in the future
-                    if (timeToStartTrigger > 10000) {
+                    if (timeToStartTrigger > 10000)
+                    {
                         SendAlertStatus_Conditionlly_Clear(tow);
                     }
 
                     //It may have been in the past, so schedule it straight away
                     timeToStartTrigger = Math.Max(timeToStartTrigger, 1000);
-                    Timer alertStartTimer = new Timer() {
+                    Timer alertStartTimer = new Timer()
+                    {
                         AutoReset = false,
                         Interval = timeToStartTrigger
                     };
@@ -84,7 +114,8 @@ namespace DOH_AMSTowingWidget {
                 }
 
                 // End Timer
-                if (!tow.isActualEndSet) {
+                if (!tow.isActualEndSet)
+                {
                     //Create the Start Timer Task
                     double timeToStartTrigger = (tow.schedEndTime - DateTime.Now).TotalMilliseconds;
 
@@ -94,13 +125,15 @@ namespace DOH_AMSTowingWidget {
                     // The tow may have previously been in the past
                     // and now is in the future, so clear any existing alerts 
                     // if they should be in the future
-                    if (timeToStartTrigger > 10000) {
+                    if (timeToStartTrigger > 10000)
+                    {
                         SendAlertStatus_Conditionlly_Clear(tow);
                     }
 
                     //It may have been in the past, so schedule it straight away
                     timeToStartTrigger = Math.Max(timeToStartTrigger, 1000);
-                    Timer alertEndTimer = new Timer() {
+                    Timer alertEndTimer = new Timer()
+                    {
                         AutoReset = false,
                         Interval = timeToStartTrigger
                     };
@@ -124,29 +157,44 @@ namespace DOH_AMSTowingWidget {
             }
         }
 
-        public void Clear() {
-            lock (padlock) {
+        public void Clear()
+        {
+            lock (padlock)
+            {
 
                 Logger.Trace("Clearing Tow Cache");
                 // Make sure any timers are disabled
-                foreach (TowEntity tow in towMap.Values) {
+                foreach (TowEntity tow in towMap.Values)
+                {
                     tow.StopTimer();
                 }
                 // Clear the map
                 towMap.Clear();
+                standMap.Clear();
             }
         }
 
-        public void RemoveTow(string key, bool logError = true) {
-            lock (padlock) {
-                try {
+        public void AddStand(StandEntity stand)
+        {
+            standMap.Add(stand.Id, stand);
+        }
+
+        public void RemoveTow(string key, bool logError = true)
+        {
+            lock (padlock)
+            {
+                try
+                {
                     TowEntity tow = towMap[key];
                     Logger.Info($"Removing Tow Event {tow.ToString()}, Flights {tow.fltStr}");
                     tow.StopTimer();
                     //       SendAlertStatusClear(tow);
                     towMap.Remove(key);
-                } catch (Exception e) {
-                    if (logError) {
+                }
+                catch (Exception e)
+                {
+                    if (logError)
+                    {
                         Logger.Error(e.Message);
                     }
                 }
@@ -154,34 +202,46 @@ namespace DOH_AMSTowingWidget {
         }
 
 
-        public void RemoveTowAndClear(string key, bool logError = true) {
-            lock (padlock) {
+        public void RemoveTowAndClear(string key, bool logError = true)
+        {
+            lock (padlock)
+            {
                 // If there is an exisiting tow event in the cache, delete it.
-                try {
+                try
+                {
                     TowEntity towExisting = towMap[key];
                     Logger.Info($"Removing Tow Event {towExisting.ToString()}, Flights {towExisting.fltStr}");
                     towExisting.StopTimer();
                     SendAlertStatus_Conditionlly_Clear(towExisting);
                     towMap.Remove(key);
-                } catch (Exception e) {
-                    if (logError) {
+                }
+                catch (Exception e)
+                {
+                    if (logError)
+                    {
                         Logger.Error(e.Message);
                     }
                 }
             }
         }
-        public void RemoveTowAndClear(TowEntity tow, bool logError = true) {
-            lock (padlock) {
+        public void RemoveTowAndClear(TowEntity tow, bool logError = true)
+        {
+            lock (padlock)
+            {
                 // If there is an exisiting tow event in the cache, delete it.
-                try {
+                try
+                {
                     TowEntity towExisting = towMap[tow.towID];
                     Logger.Trace($"Removing Tow Event {towExisting.ToString()}");
                     SendAlertStatus_Conditionlly_Clear(towExisting);
                     towExisting.StopTimer();
                     towMap.Remove(tow.towID);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     SendAlertStatus_Conditionlly_Clear(tow);
-                    if (logError) {
+                    if (logError)
+                    {
                         Logger.Error(e.Message);
                     }
                 }
@@ -189,31 +249,40 @@ namespace DOH_AMSTowingWidget {
             SendAlertStatus_Conditionlly_Clear(tow);
         }
 
-        public void SendAlertStatus_Conditionlly_Clear(TowEntity tow) {
+        public void SendAlertStatus_Conditionlly_Clear(TowEntity tow)
+        {
             // The particular tow event is potentially clear, but there may be other
             // tow events associated with this flight which are not clear.
             // so we need to check the other tow events to see if they are applicable.
 
             //First check if there are any other tow events for the flights which would require the status to still be set
 
-            if (SetForOtherTows(tow)) {
+            if (SetForOtherTows(tow))
+            {
                 // Other tow events were found for this flight, so make sure the flag is set
                 SendAlertStatus(tow, "true");
-            } else {
+            }
+            else
+            {
                 // No other tow events were set for the flights in this tow event, so the alert can be cleared. 
                 SendAlertStatus(tow, "false");
             }
         }
-        public void SendAlertStatusSet(TowEntity tow) {
+        public void SendAlertStatusSet(TowEntity tow)
+        {
             SendAlertStatus(tow, "true");
         }
 
-        public bool SetForOtherTows(TowEntity tow) {
+        public bool SetForOtherTows(TowEntity tow)
+        {
 
             // Go through the other tow events and see if any of them are alerted for the flights in this tow.
-            foreach (FlightNode flight in tow.flights) {
-                foreach (TowEntity t in towMap.Values) {
-                    if (t.isActiveForFlight(flight)) {
+            foreach (FlightNode flight in tow.flights)
+            {
+                foreach (TowEntity t in towMap.Values)
+                {
+                    if (t.isActiveForFlight(flight))
+                    {
                         return true;
                     }
                 }
@@ -224,11 +293,14 @@ namespace DOH_AMSTowingWidget {
         }
 
         // Check alert status for a particular flight
-        public bool SetForFlight(FlightNode flt) {
+        public bool SetForFlight(FlightNode flt)
+        {
 
             // Go through the other tow events and see if any of them are alerted for the flights in this tow.
-            foreach (TowEntity t in towMap.Values) {
-                if (t.isActiveForFlight(flt)) {
+            foreach (TowEntity t in towMap.Values)
+            {
+                if (t.isActiveForFlight(flt))
+                {
                     return true;
                 }
             }
@@ -239,19 +311,22 @@ namespace DOH_AMSTowingWidget {
 
 
         // Set the alert for a individual flight
-        public void SendAlertStatus(FlightNode flt, string alertStatus) {
+        public void SendAlertStatus(FlightNode flt, string alertStatus)
+        {
 
             // The parameter in the Update Flight request is an array of "PropertyValue"s. which have the AMS external field name 
             // of the field to update and the value itself (booleans are sent as strings with values "true", "false" or "" for unset.
 
-            PropertyValue pv = new PropertyValue {
+            PropertyValue pv = new PropertyValue
+            {
                 propertyNameField = Parameters.ALERT_FIELD,
                 valueField = alertStatus
             };
             PropertyValue[] val = { pv };
 
             // The web services client which does the work talking to the AMS WebServices EndPoint
-            using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient()) {
+            using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient())
+            {
 
                 LookupCode apCode = new LookupCode();
                 apCode.codeContextField = CodeContext.ICAO;
@@ -271,15 +346,21 @@ namespace DOH_AMSTowingWidget {
                 flightID.flightNumberField = flt.fltNumber;
 
                 bool callOK = true;
-                do {
-                    try {
-                        if (flightID != null) {
+                do
+                {
+                    try
+                    {
+                        if (flightID != null)
+                        {
                             System.Xml.XmlElement res = client.UpdateFlight(Parameters.TOKEN, flightID, val);
-                            if (Parameters.DEEPTRACE) {
+                            if (Parameters.DEEPTRACE)
+                            {
                                 Logger.Trace($"DEEP TRACE - AMS Update Response =====>>\n{res.OuterXml}\n <<==== DEEP TRACE");
                             }
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         Logger.Error("Failed to update the custom field");
                         Logger.Error(e.Message);
                         Logger.Error($"1. Check AMS Web API Server is running ");
@@ -292,36 +373,56 @@ namespace DOH_AMSTowingWidget {
         }
 
 
-        private void SendAlertStatus(TowEntity tow, string alertStatus) {
+        private void SendAlertStatus(TowEntity tow, string alertStatus)
+        {
 
             // The parameter in the Update Flight request is an array of "PropertyValue"s. which have the AMS external field name 
             // of the field to update and the value itself (booleans are sent as strings with values "true", "false" or "" for unset.
 
-            PropertyValue pv = new PropertyValue {
+            PropertyValue pv = new PropertyValue
+            {
                 propertyNameField = Parameters.ALERT_FIELD,
                 valueField = alertStatus
             };
             PropertyValue[] val = { pv };
 
+            //Update the stannd
+            try
+            {
+                StandManager.UpdateStandAsync(tow);
+            } catch (Exception)
+            {
+                Logger.Error($"Failed to update stand for {tow}");
+            }
+
             // The web services client which does the work talking to the AMS WebServices EndPoint
-            using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient()) {
+            using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient())
+            {
 
                 // The Arrival flight (if any)
                 FlightId flightID = tow.GetArrivalFlightID();
 
                 bool callOK = true;
-                do {
-                    try {
-                        if (flightID != null) {
+                do
+                {
+                    try
+                    {
+                        if (flightID != null)
+                        {
                             System.Xml.XmlElement res = client.UpdateFlight(Parameters.TOKEN, flightID, val);
-                            if (Parameters.DEEPTRACE) {
+                            if (Parameters.DEEPTRACE)
+                            {
                                 Logger.Trace($"DEEP TRACE - AMS Update Response =====>>\n{res.OuterXml}\n <<==== DEEP TRACE");
                             }
                             Logger.Trace($"Update Written to AMS (Arrival Flight)  {tow.towID}");
-                        } else {
+                        }
+                        else
+                        {
                             Logger.Trace($"No Arrival Flight for:  {tow.towID}");
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         Logger.Error("Failed to update the custom field");
                         Logger.Error(e.Message);
                         Logger.Error($"1. Check AMS Web API Server is running ");
@@ -336,18 +437,26 @@ namespace DOH_AMSTowingWidget {
                 // The Departure flight (if any)
                 flightID = tow.GetDepartureFlightID();
 
-                do {
-                    try {
-                        if (flightID != null) {
+                do
+                {
+                    try
+                    {
+                        if (flightID != null)
+                        {
                             System.Xml.XmlElement res = client.UpdateFlight(Parameters.TOKEN, flightID, val);
-                            if (Parameters.DEEPTRACE) {
+                            if (Parameters.DEEPTRACE)
+                            {
                                 Logger.Trace($"DEEP TRACE - AMS Update Response =====>>\n{res.OuterXml}\n <<==== DEEP TRACE");
                             }
                             Logger.Trace($"Update Written to AMS (Departure Flight)  {tow.towID}");
-                        } else {
+                        }
+                        else
+                        {
                             Logger.Trace($"No Departure Flight for:  {tow.towID}");
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         Logger.Error("Failed to update the custom field");
                         Logger.Error(e.Message);
                         Logger.Error($"1. Check AMS Web API Server is running ");

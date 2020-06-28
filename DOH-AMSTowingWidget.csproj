@@ -72,6 +72,8 @@
     <Compile Include="Parameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandEntity.cs" />
+    <Compile Include="StandManager.cs" />
     <Compile Include="TowEntity.cs" />
     <Compile Include="TowEventManager.cs" />
     <Compile Include="TowNotStarted.cs" />

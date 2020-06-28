@@ -3,10 +3,12 @@ using System.Xml.Linq;
 
 //Version RC 3.7
 
-namespace DOH_AMSTowingWidget {
+namespace DOH_AMSTowingWidget
+{
 
     // Class for holding the flight information that is contained in the Towing message
-    class FlightNode {
+    public class FlightNode
+    {
         public string nature;
         public string airlineCode;
         public string fltNumber;
@@ -15,7 +17,8 @@ namespace DOH_AMSTowingWidget {
 
 
         // The "node" parameter is one the XElement of the "FlightIndentifier" element of the Towing message 
-        public FlightNode(XmlNode node, XmlNamespaceManager nsmgr) {
+        public FlightNode(XmlNode node, XmlNamespaceManager nsmgr)
+        {
 
             this.nature = node.SelectSingleNode(".//ams:FlightKind", nsmgr).InnerText;
             this.airlineCode = node.SelectSingleNode(".//ams:AirlineDesignator[@codeContext='IATA']", nsmgr).InnerText;
@@ -24,7 +27,8 @@ namespace DOH_AMSTowingWidget {
         }
 
         // The "node" parameter is one the XElement of the "FlightIndentifier" element of the Towing message 
-        public FlightNode(XElement node) {
+        public FlightNode(XElement node)
+        {
 
             this.nature = node.Element("Nature").Value;
             this.airlineCode = node.Element("AirlineCode").Value;
@@ -33,18 +37,23 @@ namespace DOH_AMSTowingWidget {
         }
 
         // Is the supplied node referring to the same flight as this node?
-        public bool Equals(FlightNode node) {
+        public bool Equals(FlightNode node)
+        {
             if (node.nature == this.nature
                 && node.airlineCode == this.airlineCode
                 && node.fltNumber == this.fltNumber
-                && node.schedDate == this.schedDate) {
+                && node.schedDate == this.schedDate)
+            {
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
 
-        public new string ToString() {
+        public new string ToString()
+        {
             return $"AirlineCode: {airlineCode}, Flight Number: {fltNumber}, Nature: {nature}, Scheduled Date: {schedDate}";
 
         }
