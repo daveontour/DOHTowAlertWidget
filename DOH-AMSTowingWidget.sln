@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOH-AMSTowingWidget", "DOH-AMSTowingWidget.csproj", "{CFBC5150-0DB2-4B21-B4D1-261F7A1D7E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{0C86C00D-9EFE-43FA-8489-004B91041EFD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{CFBC5150-0DB2-4B21-B4D1-261F7A1D7E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFBC5150-0DB2-4B21-B4D1-261F7A1D7E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFBC5150-0DB2-4B21-B4D1-261F7A1D7E2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C86C00D-9EFE-43FA-8489-004B91041EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C86C00D-9EFE-43FA-8489-004B91041EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C86C00D-9EFE-43FA-8489-004B91041EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C86C00D-9EFE-43FA-8489-004B91041EFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
