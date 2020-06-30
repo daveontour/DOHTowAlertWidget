@@ -7,7 +7,7 @@
     <ProjectGuid>{CFBC5150-0DB2-4B21-B4D1-261F7A1D7E2E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>DOH_AMSTowingWidget</RootNamespace>
-    <AssemblyName>AMSTowingAlertWidget40</AssemblyName>
+    <AssemblyName>AMSTowingAlertWidget</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -76,7 +76,7 @@
     <Compile Include="StandManager.cs" />
     <Compile Include="TowEntity.cs" />
     <Compile Include="TowEventManager.cs" />
-    <Compile Include="TowNotStarted.cs" />
+    <Compile Include="TowMonitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

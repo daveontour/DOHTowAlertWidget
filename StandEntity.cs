@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
     public class StandEntity
     {

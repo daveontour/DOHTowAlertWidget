@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-//Version RC 3.7
+//Version 4.0
 
 /*
  * 
@@ -22,14 +22,13 @@
  * 
  */
 
-namespace WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv {
-    using System.Runtime.Serialization;
-
-
+namespace WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "AirportIdentifierType", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationWebA" +
         "PI.Srv")]
-    public enum AirportIdentifierType : int {
+    public enum AirportIdentifierType : int
+    {
 
         [System.Runtime.Serialization.EnumMemberAttribute()]
         IATACode = 0,
@@ -38,15 +37,14 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv {
         ICAOCode = 1,
     }
 }
-namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
-    using System.Runtime.Serialization;
-
-
+namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes
+{
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "FlightId", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class FlightId : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class FlightId : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -160,7 +158,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "LookupCode", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class LookupCode : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class LookupCode : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -201,7 +200,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "FlightKind", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public enum FlightKind : int {
+    public enum FlightKind : int
+    {
 
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Arrival = 0,
@@ -213,7 +213,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "CodeContext", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public enum CodeContext : int {
+    public enum CodeContext : int
+    {
 
         [System.Runtime.Serialization.EnumMemberAttribute()]
         ICAO = 0,
@@ -226,7 +227,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "PropertyValue", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class PropertyValue : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class PropertyValue : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -293,7 +295,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.Runtime.Serialization.DataContractAttribute(Name = "FlightUpdateInformation", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended))]
-    public partial class FlightUpdateInformation : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class FlightUpdateInformation : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -359,7 +362,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "FlightUpdateInformationExtended", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class FlightUpdateInformationExtended : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation {
+    public partial class FlightUpdateInformationExtended : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation
+    {
 
         private WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CodeShareFlightIdentifier[] codeSharesUpdateFieldField;
 
@@ -378,7 +382,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "ActivityUpdate", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class ActivityUpdate : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class ActivityUpdate : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -420,7 +425,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "EventUpdate", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class EventUpdate : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class EventUpdate : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -462,7 +468,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "TableValueUpdate", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class TableValueUpdate : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class TableValueUpdate : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -504,7 +511,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "TableRow", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class TableRow : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class TableRow : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -546,7 +554,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "CodeShareFlightIdentifier", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class CodeShareFlightIdentifier : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class CodeShareFlightIdentifier : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -588,7 +597,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "StandDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class StandDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class StandDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -630,7 +640,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "StandResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class StandResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class StandResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -645,7 +656,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleResource))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselResource))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandResource))]
-    public partial class Resource : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class Resource : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -687,56 +699,64 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "GateResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class GateResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class GateResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "ChuteResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class ChuteResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class ChuteResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "CheckInResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class CheckInResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class CheckInResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "ArrivalDeskResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class ArrivalDeskResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class ArrivalDeskResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "LoungeResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class LoungeResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class LoungeResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "VehicleResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class VehicleResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class VehicleResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "CarouselResource", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class CarouselResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource {
+    public partial class CarouselResource : WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.Resource
+    {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "DowngradeIdentifier", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class DowngradeIdentifier : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class DowngradeIdentifier : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -778,7 +798,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "GateDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class GateDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class GateDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -820,7 +841,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "ChuteDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class ChuteDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class ChuteDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -862,7 +884,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "CheckInDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class CheckInDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class CheckInDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -904,7 +927,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "ArrivalDeskDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class ArrivalDeskDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class ArrivalDeskDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -946,7 +970,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "LoungeDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class LoungeDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class LoungeDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -988,7 +1013,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "VehicleDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class VehicleDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class VehicleDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -1030,7 +1056,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "CarouselDowngradeState", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class CarouselDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class CarouselDowngradeState : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -1072,7 +1099,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "SlotRequestIdentifier", Namespace = "http://schemas.datacontract.org/2004/07/WorkBridge.Modules.AMS.AMSIntegrationAPI." +
         "Mod.Intf.DataTypes")]
-    public partial class SlotRequestIdentifier : object, System.Runtime.Serialization.IExtensibleDataObject {
+    public partial class SlotRequestIdentifier : object, System.Runtime.Serialization.IExtensibleDataObject
+    {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
 
@@ -1102,7 +1130,8 @@ namespace WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes {
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
 [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.sita.aero/ams6-xml-api-webservice", ConfigurationName = "IAMSIntegrationService")]
-public interface IAMSIntegrationService {
+public interface IAMSIntegrationService
+{
 
     [System.ServiceModel.OperationContractAttribute(Action = "http://www.sita.aero/ams6-xml-api-webservice/IAMSIntegrationService/Login", ReplyAction = "http://www.sita.aero/ams6-xml-api-webservice/IAMSIntegrationService/LoginResponse" +
         "")]
@@ -2018,797 +2047,996 @@ public interface IAMSIntegrationService {
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-public interface IAMSIntegrationServiceChannel : IAMSIntegrationService, System.ServiceModel.IClientChannel {
+public interface IAMSIntegrationServiceChannel : IAMSIntegrationService, System.ServiceModel.IClientChannel
+{
 }
 
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-public partial class AMSIntegrationServiceClient : System.ServiceModel.ClientBase<IAMSIntegrationService>, IAMSIntegrationService {
+public partial class AMSIntegrationServiceClient : System.ServiceModel.ClientBase<IAMSIntegrationService>, IAMSIntegrationService
+{
 
-    public AMSIntegrationServiceClient() {
+    public AMSIntegrationServiceClient()
+    {
     }
 
     public AMSIntegrationServiceClient(string endpointConfigurationName) :
-            base(endpointConfigurationName) {
+            base(endpointConfigurationName)
+    {
     }
 
     public AMSIntegrationServiceClient(string endpointConfigurationName, string remoteAddress) :
-            base(endpointConfigurationName, remoteAddress) {
+            base(endpointConfigurationName, remoteAddress)
+    {
     }
 
     public AMSIntegrationServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) :
-            base(endpointConfigurationName, remoteAddress) {
+            base(endpointConfigurationName, remoteAddress)
+    {
     }
 
     public AMSIntegrationServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
-            base(binding, remoteAddress) {
+            base(binding, remoteAddress)
+    {
     }
 
-    public System.Xml.XmlElement Login(string username, string password) {
+    public System.Xml.XmlElement Login(string username, string password)
+    {
         return base.Channel.Login(username, password);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> LoginAsync(string username, string password) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> LoginAsync(string username, string password)
+    {
         return base.Channel.LoginAsync(username, password);
     }
 
-    public System.Xml.XmlElement Logoff(string sessionToken) {
+    public System.Xml.XmlElement Logoff(string sessionToken)
+    {
         return base.Channel.Logoff(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> LogoffAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> LogoffAsync(string sessionToken)
+    {
         return base.Channel.LogoffAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetUserRoles(string token) {
+    public System.Xml.XmlElement GetUserRoles(string token)
+    {
         return base.Channel.GetUserRoles(token);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetUserRolesAsync(string token) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetUserRolesAsync(string token)
+    {
         return base.Channel.GetUserRolesAsync(token);
     }
 
-    public System.Xml.XmlElement GetUserWebAccessRights(string token) {
+    public System.Xml.XmlElement GetUserWebAccessRights(string token)
+    {
         return base.Channel.GetUserWebAccessRights(token);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetUserWebAccessRightsAsync(string token) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetUserWebAccessRightsAsync(string token)
+    {
         return base.Channel.GetUserWebAccessRightsAsync(token);
     }
 
-    public System.Xml.XmlElement GetUserWebAcdmAccessRights(string sessionToken) {
+    public System.Xml.XmlElement GetUserWebAcdmAccessRights(string sessionToken)
+    {
         return base.Channel.GetUserWebAcdmAccessRights(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetUserWebAcdmAccessRightsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetUserWebAcdmAccessRightsAsync(string sessionToken)
+    {
         return base.Channel.GetUserWebAcdmAccessRightsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetFlights(string sessionToken, System.DateTime from, System.DateTime to, string airport, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetFlights(string sessionToken, System.DateTime from, System.DateTime to, string airport, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetFlights(sessionToken, from, to, airport, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetFlightsAsync(string sessionToken, System.DateTime from, System.DateTime to, string airport, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetFlightsAsync(string sessionToken, System.DateTime from, System.DateTime to, string airport, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetFlightsAsync(sessionToken, from, to, airport, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetMovementsOverlappingWithPeriod(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetMovementsOverlappingWithPeriod(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetMovementsOverlappingWithPeriod(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetMovementsOverlappingWithPeriodAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetMovementsOverlappingWithPeriodAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetMovementsOverlappingWithPeriodAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetAirports(string sessionToken) {
+    public System.Xml.XmlElement GetAirports(string sessionToken)
+    {
         return base.Channel.GetAirports(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirportsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirportsAsync(string sessionToken)
+    {
         return base.Channel.GetAirportsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAircrafts(string sessionToken) {
+    public System.Xml.XmlElement GetAircrafts(string sessionToken)
+    {
         return base.Channel.GetAircrafts(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftsAsync(string sessionToken)
+    {
         return base.Channel.GetAircraftsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAircraftTypes(string sessionToken) {
+    public System.Xml.XmlElement GetAircraftTypes(string sessionToken)
+    {
         return base.Channel.GetAircraftTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftTypesAsync(string sessionToken)
+    {
         return base.Channel.GetAircraftTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAirlines(string sessionToken) {
+    public System.Xml.XmlElement GetAirlines(string sessionToken)
+    {
         return base.Channel.GetAirlines(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirlinesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirlinesAsync(string sessionToken)
+    {
         return base.Channel.GetAirlinesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetCustomsTypes(string sessionToken) {
+    public System.Xml.XmlElement GetCustomsTypes(string sessionToken)
+    {
         return base.Channel.GetCustomsTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCustomsTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCustomsTypesAsync(string sessionToken)
+    {
         return base.Channel.GetCustomsTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetRoutes(string sessionToken) {
+    public System.Xml.XmlElement GetRoutes(string sessionToken)
+    {
         return base.Channel.GetRoutes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetRoutesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetRoutesAsync(string sessionToken)
+    {
         return base.Channel.GetRoutesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAreas(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetAreas(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetAreas(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAreasAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAreasAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetAreasAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetStands(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetStands(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetStands(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetStandsAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetStandsAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetStandsAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetCarousels(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetCarousels(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCarousels(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCarouselsAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCarouselsAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCarouselsAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetCheckIns(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetCheckIns(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCheckIns(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCheckInsAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCheckInsAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCheckInsAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetArrivalDesks(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetArrivalDesks(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetArrivalDesks(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalDesksAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalDesksAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetArrivalDesksAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetChutes(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetChutes(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetChutes(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetChutesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetChutesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetChutesAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetGates(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetGates(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetGates(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetGatesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetGatesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetGatesAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetLounges(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetLounges(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetLounges(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetLoungesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetLoungesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetLoungesAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetVehicles(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetVehicles(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetVehicles(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetVehiclesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetVehiclesAsync(string sessionToken, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetVehiclesAsync(sessionToken, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetAircraftCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetAircraftCustomFields(string sessionToken)
+    {
         return base.Channel.GetAircraftCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetAircraftCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAircraftTypeCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetAircraftTypeCustomFields(string sessionToken)
+    {
         return base.Channel.GetAircraftTypeCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftTypeCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAircraftTypeCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetAircraftTypeCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAirlineCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetAirlineCustomFields(string sessionToken)
+    {
         return base.Channel.GetAirlineCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirlineCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirlineCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetAirlineCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetAirportCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetAirportCustomFields(string sessionToken)
+    {
         return base.Channel.GetAirportCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirportCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAirportCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetAirportCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetRouteCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetRouteCustomFields(string sessionToken)
+    {
         return base.Channel.GetRouteCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetRouteCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetRouteCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetRouteCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetArrivalFlightCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetArrivalFlightCustomFields(string sessionToken)
+    {
         return base.Channel.GetArrivalFlightCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalFlightCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalFlightCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetArrivalFlightCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetDepartureFlightCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetDepartureFlightCustomFields(string sessionToken)
+    {
         return base.Channel.GetDepartureFlightCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetDepartureFlightCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetDepartureFlightCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetDepartureFlightCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetMovementCustomFields(string sessionToken) {
+    public System.Xml.XmlElement GetMovementCustomFields(string sessionToken)
+    {
         return base.Channel.GetMovementCustomFields(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetMovementCustomFieldsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetMovementCustomFieldsAsync(string sessionToken)
+    {
         return base.Channel.GetMovementCustomFieldsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId) {
+    public System.Xml.XmlElement GetFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId)
+    {
         return base.Channel.GetFlight(sessionToken, flightId);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId)
+    {
         return base.Channel.GetFlightAsync(sessionToken, flightId);
     }
 
-    public System.Xml.XmlElement GetCommonCheckInAllocationShapes(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetCommonCheckInAllocationShapes(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCommonCheckInAllocationShapes(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCommonCheckInAllocationShapesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCommonCheckInAllocationShapesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCommonCheckInAllocationShapesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetCommonArrivalDeskAllocationShapes(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetCommonArrivalDeskAllocationShapes(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCommonArrivalDeskAllocationShapes(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCommonArrivalDeskAllocationShapesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCommonArrivalDeskAllocationShapesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCommonArrivalDeskAllocationShapesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement CreateFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates) {
+    public System.Xml.XmlElement CreateFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates)
+    {
         return base.Channel.CreateFlight(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates)
+    {
         return base.Channel.CreateFlightAsync(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Xml.XmlElement CreateFlightExtended(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates) {
+    public System.Xml.XmlElement CreateFlightExtended(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates)
+    {
         return base.Channel.CreateFlightExtended(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateFlightExtendedAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateFlightExtendedAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates)
+    {
         return base.Channel.CreateFlightExtendedAsync(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Xml.XmlElement CreateFlightWithCodeShares(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates) {
+    public System.Xml.XmlElement CreateFlightWithCodeShares(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates)
+    {
         return base.Channel.CreateFlightWithCodeShares(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateFlightWithCodeSharesAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateFlightWithCodeSharesAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates)
+    {
         return base.Channel.CreateFlightWithCodeSharesAsync(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Xml.XmlElement DeleteFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier) {
+    public System.Xml.XmlElement DeleteFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier)
+    {
         return base.Channel.DeleteFlight(sessionToken, flightIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier)
+    {
         return base.Channel.DeleteFlightAsync(sessionToken, flightIdentifier);
     }
 
-    public System.Xml.XmlElement UpdateFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates) {
+    public System.Xml.XmlElement UpdateFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates)
+    {
         return base.Channel.UpdateFlight(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updates)
+    {
         return base.Channel.UpdateFlightAsync(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Xml.XmlElement UpdateFlightExtended(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates) {
+    public System.Xml.XmlElement UpdateFlightExtended(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates)
+    {
         return base.Channel.UpdateFlightExtended(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateFlightExtendedAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateFlightExtendedAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformation updates)
+    {
         return base.Channel.UpdateFlightExtendedAsync(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Xml.XmlElement UpdateFlightWithCodeShares(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates) {
+    public System.Xml.XmlElement UpdateFlightWithCodeShares(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates)
+    {
         return base.Channel.UpdateFlightWithCodeShares(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateFlightWithCodeSharesAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateFlightWithCodeSharesAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightUpdateInformationExtended updates)
+    {
         return base.Channel.UpdateFlightWithCodeSharesAsync(sessionToken, flightIdentifier, updates);
     }
 
-    public System.Xml.XmlElement UnlinkFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier) {
+    public System.Xml.XmlElement UnlinkFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier)
+    {
         return base.Channel.UnlinkFlight(sessionToken, flightIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UnlinkFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UnlinkFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightIdentifier)
+    {
         return base.Channel.UnlinkFlightAsync(sessionToken, flightIdentifier);
     }
 
-    public System.Xml.XmlElement LinkFlights(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId masterFlightId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId slaveFlightId) {
+    public System.Xml.XmlElement LinkFlights(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId masterFlightId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId slaveFlightId)
+    {
         return base.Channel.LinkFlights(sessionToken, masterFlightId, slaveFlightId);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> LinkFlightsAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId masterFlightId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId slaveFlightId) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> LinkFlightsAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId masterFlightId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId slaveFlightId)
+    {
         return base.Channel.LinkFlightsAsync(sessionToken, masterFlightId, slaveFlightId);
     }
 
-    public System.Xml.XmlElement CreateStandDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateStandDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState)
+    {
         return base.Channel.CreateStandDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateStandDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateStandDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState)
+    {
         return base.Channel.CreateStandDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateStandDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateStandDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState)
+    {
         return base.Channel.UpdateStandDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateStandDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateStandDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.StandDowngradeState downgradeState)
+    {
         return base.Channel.UpdateStandDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteStandDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteStandDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteStandDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteStandDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteStandDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteStandDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetStandDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetStandDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetStandDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetStandDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetStandDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetStandDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetStandDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetStandDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetStandDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetStandDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetStandDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetStandDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateGateDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateGateDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState)
+    {
         return base.Channel.CreateGateDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateGateDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateGateDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState)
+    {
         return base.Channel.CreateGateDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateGateDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateGateDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState)
+    {
         return base.Channel.UpdateGateDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateGateDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateGateDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.GateDowngradeState downgradeState)
+    {
         return base.Channel.UpdateGateDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteGateDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteGateDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteGateDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteGateDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteGateDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteGateDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetGateDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetGateDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetGateDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetGateDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetGateDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetGateDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetGateDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetGateDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetGateDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetGateDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetGateDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetGateDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateChuteDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateChuteDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState)
+    {
         return base.Channel.CreateChuteDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateChuteDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateChuteDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState)
+    {
         return base.Channel.CreateChuteDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateChuteDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateChuteDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState)
+    {
         return base.Channel.UpdateChuteDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateChuteDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateChuteDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ChuteDowngradeState downgradeState)
+    {
         return base.Channel.UpdateChuteDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteChuteDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteChuteDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteChuteDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteChuteDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteChuteDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteChuteDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetChuteDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetChuteDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetChuteDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetChuteDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetChuteDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetChuteDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetChuteDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetChuteDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetChuteDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetChuteDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetChuteDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetChuteDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateCheckInDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateCheckInDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState)
+    {
         return base.Channel.CreateCheckInDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateCheckInDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateCheckInDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState)
+    {
         return base.Channel.CreateCheckInDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateCheckInDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateCheckInDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState)
+    {
         return base.Channel.UpdateCheckInDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateCheckInDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateCheckInDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CheckInDowngradeState downgradeState)
+    {
         return base.Channel.UpdateCheckInDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteCheckInDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteCheckInDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteCheckInDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteCheckInDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteCheckInDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteCheckInDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetCheckInDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetCheckInDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCheckInDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCheckInDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCheckInDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCheckInDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetCheckInDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetCheckInDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetCheckInDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCheckInDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCheckInDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetCheckInDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateArrivalDeskDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateArrivalDeskDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState)
+    {
         return base.Channel.CreateArrivalDeskDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateArrivalDeskDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateArrivalDeskDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState)
+    {
         return base.Channel.CreateArrivalDeskDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateArrivalDeskDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateArrivalDeskDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState)
+    {
         return base.Channel.UpdateArrivalDeskDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateArrivalDeskDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateArrivalDeskDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.ArrivalDeskDowngradeState downgradeState)
+    {
         return base.Channel.UpdateArrivalDeskDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteArrivalDeskDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteArrivalDeskDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteArrivalDeskDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteArrivalDeskDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteArrivalDeskDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteArrivalDeskDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetArrivalDeskDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetArrivalDeskDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetArrivalDeskDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalDeskDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalDeskDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetArrivalDeskDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetArrivalDeskDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetArrivalDeskDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetArrivalDeskDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalDeskDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetArrivalDeskDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetArrivalDeskDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateLoungeDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateLoungeDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState)
+    {
         return base.Channel.CreateLoungeDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateLoungeDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateLoungeDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState)
+    {
         return base.Channel.CreateLoungeDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateLoungeDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateLoungeDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState)
+    {
         return base.Channel.UpdateLoungeDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateLoungeDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateLoungeDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LoungeDowngradeState downgradeState)
+    {
         return base.Channel.UpdateLoungeDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteLoungeDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteLoungeDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteLoungeDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteLoungeDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteLoungeDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteLoungeDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetLoungeDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetLoungeDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetLoungeDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetLoungeDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetLoungeDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetLoungeDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetLoungeDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetLoungeDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetLoungeDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetLoungeDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetLoungeDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetLoungeDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateVehicleDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateVehicleDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState)
+    {
         return base.Channel.CreateVehicleDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateVehicleDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateVehicleDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState)
+    {
         return base.Channel.CreateVehicleDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateVehicleDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateVehicleDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState)
+    {
         return base.Channel.UpdateVehicleDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateVehicleDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateVehicleDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.VehicleDowngradeState downgradeState)
+    {
         return base.Channel.UpdateVehicleDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteVehicleDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteVehicleDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteVehicleDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteVehicleDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteVehicleDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteVehicleDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetVehicleDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetVehicleDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetVehicleDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetVehicleDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetVehicleDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetVehicleDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetVehicleDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetVehicleDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetVehicleDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetVehicleDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetVehicleDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetVehicleDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement CreateCarouselDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState) {
+    public System.Xml.XmlElement CreateCarouselDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState)
+    {
         return base.Channel.CreateCarouselDowngrade(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateCarouselDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateCarouselDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.LookupCode[] airportCodes, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState)
+    {
         return base.Channel.CreateCarouselDowngradeAsync(sessionToken, airportCodes, downgradeState);
     }
 
-    public System.Xml.XmlElement UpdateCarouselDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState) {
+    public System.Xml.XmlElement UpdateCarouselDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState)
+    {
         return base.Channel.UpdateCarouselDowngrade(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateCarouselDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateCarouselDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CarouselDowngradeState downgradeState)
+    {
         return base.Channel.UpdateCarouselDowngradeAsync(sessionToken, downgradeIdentifier, downgradeState);
     }
 
-    public System.Xml.XmlElement DeleteCarouselDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Xml.XmlElement DeleteCarouselDowngrade(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteCarouselDowngrade(sessionToken, downgradeIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteCarouselDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteCarouselDowngradeAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.DowngradeIdentifier downgradeIdentifier)
+    {
         return base.Channel.DeleteCarouselDowngradeAsync(sessionToken, downgradeIdentifier);
     }
 
-    public System.Xml.XmlElement GetCarouselDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetCarouselDowngrades(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCarouselDowngrades(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCarouselDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCarouselDowngradesAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetCarouselDowngradesAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetCarouselDowngradeTypes(string sessionToken) {
+    public System.Xml.XmlElement GetCarouselDowngradeTypes(string sessionToken)
+    {
         return base.Channel.GetCarouselDowngradeTypes(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCarouselDowngradeTypesAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetCarouselDowngradeTypesAsync(string sessionToken)
+    {
         return base.Channel.GetCarouselDowngradeTypesAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetSlotRequests(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Xml.XmlElement GetSlotRequests(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetSlotRequests(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetSlotRequestsAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetSlotRequestsAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType)
+    {
         return base.Channel.GetSlotRequestsAsync(sessionToken, from, to, airportCode, airportIdentifierType);
     }
 
-    public System.Xml.XmlElement GetSlotRequestsForAirline(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType, string airlineCode, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CodeContext airlineIdentifierType) {
+    public System.Xml.XmlElement GetSlotRequestsForAirline(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType, string airlineCode, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CodeContext airlineIdentifierType)
+    {
         return base.Channel.GetSlotRequestsForAirline(sessionToken, from, to, airportCode, airportIdentifierType, airlineCode, airlineIdentifierType);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetSlotRequestsForAirlineAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType, string airlineCode, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CodeContext airlineIdentifierType) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetSlotRequestsForAirlineAsync(string sessionToken, System.DateTime from, System.DateTime to, string airportCode, WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv.AirportIdentifierType airportIdentifierType, string airlineCode, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.CodeContext airlineIdentifierType)
+    {
         return base.Channel.GetSlotRequestsForAirlineAsync(sessionToken, from, to, airportCode, airportIdentifierType, airlineCode, airlineIdentifierType);
     }
 
-    public System.Xml.XmlElement CreateSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values) {
+    public System.Xml.XmlElement CreateSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values)
+    {
         return base.Channel.CreateSlotRequest(sessionToken, values);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values)
+    {
         return base.Channel.CreateSlotRequestAsync(sessionToken, values);
     }
 
-    public System.Xml.XmlElement CreateSlotRequestInCompliance(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values) {
+    public System.Xml.XmlElement CreateSlotRequestInCompliance(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values)
+    {
         return base.Channel.CreateSlotRequestInCompliance(sessionToken, values);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateSlotRequestInComplianceAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> CreateSlotRequestInComplianceAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values)
+    {
         return base.Channel.CreateSlotRequestInComplianceAsync(sessionToken, values);
     }
 
-    public System.Xml.XmlElement UpdateSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values) {
+    public System.Xml.XmlElement UpdateSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values)
+    {
         return base.Channel.UpdateSlotRequest(sessionToken, slotRequestId, values);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] values)
+    {
         return base.Channel.UpdateSlotRequestAsync(sessionToken, slotRequestId, values);
     }
 
-    public System.Xml.XmlElement SplitSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updateSlotRequestValues, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[][] createSlotRequestValues) {
+    public System.Xml.XmlElement SplitSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updateSlotRequestValues, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[][] createSlotRequestValues)
+    {
         return base.Channel.SplitSlotRequest(sessionToken, slotRequestId, updateSlotRequestValues, createSlotRequestValues);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> SplitSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updateSlotRequestValues, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[][] createSlotRequestValues) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> SplitSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[] updateSlotRequestValues, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.PropertyValue[][] createSlotRequestValues)
+    {
         return base.Channel.SplitSlotRequestAsync(sessionToken, slotRequestId, updateSlotRequestValues, createSlotRequestValues);
     }
 
-    public System.Xml.XmlElement DeleteSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId) {
+    public System.Xml.XmlElement DeleteSlotRequest(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId)
+    {
         return base.Channel.DeleteSlotRequest(sessionToken, slotRequestId);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> DeleteSlotRequestAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId)
+    {
         return base.Channel.DeleteSlotRequestAsync(sessionToken, slotRequestId);
     }
 
-    public System.Xml.XmlElement UpdateSlotRequestStatus(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, string slotRequestStatus, string comment) {
+    public System.Xml.XmlElement UpdateSlotRequestStatus(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, string slotRequestStatus, string comment)
+    {
         return base.Channel.UpdateSlotRequestStatus(sessionToken, slotRequestId, slotRequestStatus, comment);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateSlotRequestStatusAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, string slotRequestStatus, string comment) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UpdateSlotRequestStatusAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestId, string slotRequestStatus, string comment)
+    {
         return base.Channel.UpdateSlotRequestStatusAsync(sessionToken, slotRequestId, slotRequestStatus, comment);
     }
 
-    public System.Xml.XmlElement GetSlotRequestStatusHistory(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestIdentifier) {
+    public System.Xml.XmlElement GetSlotRequestStatusHistory(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestIdentifier)
+    {
         return base.Channel.GetSlotRequestStatusHistory(sessionToken, slotRequestIdentifier);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetSlotRequestStatusHistoryAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestIdentifier) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetSlotRequestStatusHistoryAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.SlotRequestIdentifier slotRequestIdentifier)
+    {
         return base.Channel.GetSlotRequestStatusHistoryAsync(sessionToken, slotRequestIdentifier);
     }
 
-    public System.Xml.XmlElement GetAvailableHomeAirportsForLogin(string token) {
+    public System.Xml.XmlElement GetAvailableHomeAirportsForLogin(string token)
+    {
         return base.Channel.GetAvailableHomeAirportsForLogin(token);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAvailableHomeAirportsForLoginAsync(string token) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetAvailableHomeAirportsForLoginAsync(string token)
+    {
         return base.Channel.GetAvailableHomeAirportsForLoginAsync(token);
     }
 
-    public System.Xml.XmlElement LockFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId) {
+    public System.Xml.XmlElement LockFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId)
+    {
         return base.Channel.LockFlight(sessionToken, flightId);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> LockFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> LockFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId)
+    {
         return base.Channel.LockFlightAsync(sessionToken, flightId);
     }
 
-    public System.Xml.XmlElement UnlockFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId) {
+    public System.Xml.XmlElement UnlockFlight(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId)
+    {
         return base.Channel.UnlockFlight(sessionToken, flightId);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> UnlockFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> UnlockFlightAsync(string sessionToken, WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes.FlightId flightId)
+    {
         return base.Channel.UnlockFlightAsync(sessionToken, flightId);
     }
 
-    public System.Xml.XmlElement GetEventDefinitions(string sessionToken) {
+    public System.Xml.XmlElement GetEventDefinitions(string sessionToken)
+    {
         return base.Channel.GetEventDefinitions(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetEventDefinitionsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetEventDefinitionsAsync(string sessionToken)
+    {
         return base.Channel.GetEventDefinitionsAsync(sessionToken);
     }
 
-    public System.Xml.XmlElement GetActivityDefinitions(string sessionToken) {
+    public System.Xml.XmlElement GetActivityDefinitions(string sessionToken)
+    {
         return base.Channel.GetActivityDefinitions(sessionToken);
     }
 
-    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetActivityDefinitionsAsync(string sessionToken) {
+    public System.Threading.Tasks.Task<System.Xml.XmlElement> GetActivityDefinitionsAsync(string sessionToken)
+    {
         return base.Channel.GetActivityDefinitionsAsync(sessionToken);
     }
 }

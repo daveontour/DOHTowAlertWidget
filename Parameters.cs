@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Configuration;
 
-//Version RC 3.7
+//Version 4.0
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
 
     /*
@@ -19,10 +19,11 @@ namespace DOH_AMSTowingWidget
         static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static string TOKEN;
-        public static string BASE_URI;
+        public static string AMS_REST_SERVICE_URI;
+        public static string AMS_WEB_SERVICE_URI;
         public static string APT_CODE;
         public static string RECVQ;
-        public static string ALERT_FIELD;
+        public static string FLIGHTALERTFIELD;
         public static string APT_CODE_ICAO;
         public static int REFRESH_INTERVAL;
         public static int GRACE_PERIOD;
@@ -50,17 +51,20 @@ namespace DOH_AMSTowingWidget
                 STANDALERTFIELD = (string)ConfigurationManager.AppSettings["StandAlertField"];
                 STANDTOWIDFIELD = (string)ConfigurationManager.AppSettings["StandTowIDField"];
 
+                FLIGHTALERTFIELD = (string)ConfigurationManager.AppSettings["FlightAlertField"];
+
                 APT_CODE = (string)ConfigurationManager.AppSettings["IATAAirportCode"];
                 APT_CODE_ICAO = (string)ConfigurationManager.AppSettings["ICAOAirportCode"];
                 TOKEN = (string)ConfigurationManager.AppSettings["Token"];
-                BASE_URI = (string)ConfigurationManager.AppSettings["BaseURI"];
+                AMS_REST_SERVICE_URI = (string)ConfigurationManager.AppSettings["AMSRestServiceURI"];
+                AMS_WEB_SERVICE_URI = (string)ConfigurationManager.AppSettings["AMSWebServiceURI"];
                 RECVQ = (string)ConfigurationManager.AppSettings["NotificationQueue"];
-                ALERT_FIELD = (string)ConfigurationManager.AppSettings["AlertField"];
                 GRACE_PERIOD = Int32.Parse((string)ConfigurationManager.AppSettings["GracePeriod"]);
                 REFRESH_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["RefreshInterval"]);
                 RESTSERVER_RETRY_INTERVAL = Int32.Parse((string)ConfigurationManager.AppSettings["ResetServerRetryInterval"]);
                 FROM_HOURS = double.Parse((string)ConfigurationManager.AppSettings["FromHours"]);
                 TO_HOURS = double.Parse((string)ConfigurationManager.AppSettings["ToHours"]);
+
                 STARTUP_FLIGHT_PROCESSING = bool.Parse((string)ConfigurationManager.AppSettings["StartUpFlightProcessing"]);
                 STARTUP_STAND_PROCESSING = bool.Parse((string)ConfigurationManager.AppSettings["StartUpStandProcessing"]);
 

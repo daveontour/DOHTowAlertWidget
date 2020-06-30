@@ -4,9 +4,9 @@ using System.Timers;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 3.7
+//Version 4.0
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
     // Hold all the information about each towing in a convenient package
     public class TowEntity

@@ -1,9 +1,9 @@
 ﻿using System.Xml;
 using System.Xml.Linq;
 
-//Version RC 3.7
+//Version 4.0
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
 
     // Class for holding the flight information that is contained in the Towing message

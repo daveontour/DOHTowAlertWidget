@@ -3,59 +3,82 @@ using System.IO;
 using System.Linq;
 using System.Messaging;
 using System.Net.Http;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv;
 
-//Version RC 3.7
+//Version 4.0
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
-    class TowNotStarted
+    class TowMonitor
     {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private readonly TowEventManager towManager = new TowEventManager();  //The class the takes care of set and executing the alerts
+        private readonly StandManager standManager = new StandManager();
+
+
         private static MessageQueue recvQueue;  // Queue to recieve update notifications on
         private bool startListenLoop = true;    // Flag controlling the execution of the update notificaiton listener
         private System.Timers.Timer resetTimer; // Timer to control the big reset of the cache
 
-        public StandManager standManager = new StandManager();
 
         private readonly static Random random = new Random();
         public bool stopProcessing = false;
-        public Thread startThread;
+        private Thread startThread;
         private Thread receiveThread;           // Thread the notification listener runs in 
-        private XElement GateXelement;
+        private BasicHttpBinding binding;
+        private EndpointAddress address;
 
-        public TowNotStarted() { }
+        public TowMonitor() { }
 
         public bool Start()
         {
             Logger.Info($"TowNotStarted Alert Service Starting ({Parameters.VERSION})");
+
+            // Set the binding and address for use by the web services client
+            binding = new BasicHttpBinding
+            {
+                MaxReceivedMessageSize = 20000000,
+                MaxBufferSize = 20000000,
+                MaxBufferPoolSize = 20000000
+            };
+            address = new EndpointAddress(Parameters.AMS_WEB_SERVICE_URI);
+
+
+
             stopProcessing = false;
             startThread = new Thread(new ThreadStart(StartThread));
             startThread.Start();
+
+
             Logger.Info($"TowNotStarted Alert Service Started ({Parameters.VERSION})");
+
             return true;
         }
         public void StartThread()
         {
 
-            Logger.Info($"TowNotStarted Alert Initialisation Starting ({Parameters.VERSION})");
             // Clear the tow event cache of any existing events
-            this.towManager.Clear();
+            towManager.Clear();
             towManager.StandManager = standManager;
-            // Initially Populate the Towing Cache at startup 
-            var t = Task.Run(() => GetStandsAsync());
-            t.Wait();
-            Logger.Info($"Starting Initial Population of TowEvent Cache ({Parameters.VERSION})");
-            t = Task.Run(() => GetCurrentTowingsAsync());
-            t.Wait();
-            Logger.Info($"Completeted Initial Population of TowEvent Cache ({Parameters.VERSION})");
+
+
+            // Initially Clear the Stand status as required
+            if (Parameters.ALERT_STAND)
+            {
+                var tt = Task.Run(() => GetStandsAsync());
+                tt.Wait();
+            }
+
+            Logger.Info($"-----> Starting Initial Population of TowEvent Cache ({Parameters.VERSION})");
+            Task.Run(() => GetCurrentTowingsAsync()).Wait();
+            Logger.Info($"<----- Completeted Initial Population of TowEvent Cache ({Parameters.VERSION})");
 
 
             //Start Listener for incoming towing notifications
@@ -87,17 +110,13 @@ namespace DOH_AMSTowingWidget
             resetTimer.Elapsed += (source, eventArgs) =>
             {
                 resetTimer.Stop();
-                var r = Task.Run(() => GetCurrentTowingsAsync());
-                r.Wait();
+                Task.Run(() => GetCurrentTowingsAsync()).Wait();
                 resetTimer.Start();
             };
             resetTimer.Start();
             Logger.Info($"Cache Reset timer set up for {Parameters.REFRESH_INTERVAL}ms");
 
-            Logger.Info($"TowNotStarted Alert Initialisation Completed ({Parameters.VERSION})");
-
         }
-
         public void Stop()
         {
             Logger.Info("TowNotStarted Alert Service Stopping");
@@ -105,7 +124,6 @@ namespace DOH_AMSTowingWidget
             startListenLoop = false;
             Logger.Info("TowNotStarted Alert Service Stopped");
         }
-
         public async Task GetCurrentTowingsAsync()
         {
 
@@ -121,7 +139,7 @@ namespace DOH_AMSTowingWidget
             }
             catch (Exception e)
             {
-                Logger.Error($"Fatal Error: MQMQ Notification Queue not accessible or readable");
+                Logger.Error($"Fatal Error: MSMQ Notification Queue not accessible or readable");
                 Logger.Error(e.Message);
                 Logger.Error($"1. Check for existance and permission on the queue {Parameters.RECVQ}\n");
                 //Give the operator a chance to read the message and then exit
@@ -142,7 +160,7 @@ namespace DOH_AMSTowingWidget
 
                         string from = DateTime.UtcNow.AddHours(Parameters.FROM_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
                         string to = DateTime.UtcNow.AddHours(Parameters.TO_HOURS).ToString("yyyy-MM-ddTHH:mm:ssZ");
-                        string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Towings/{from}/{to}";
+                        string uri = Parameters.AMS_REST_SERVICE_URI + $"{Parameters.APT_CODE}/Towings/{from}/{to}";
 
                         Logger.Trace($"URI for TowEvent cache source set to {uri}");
 
@@ -155,6 +173,13 @@ namespace DOH_AMSTowingWidget
                             try
                             {
                                 TowEntity tow = towManager.SetTowEvent(e);
+
+                                // Update the relevant STAND if required
+                                if (Parameters.ALERT_STAND)
+                                {
+                                    TowEntity towStand = new TowEntity(e);
+                                    standManager.UpdateStandAsync(towStand);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -172,14 +197,13 @@ namespace DOH_AMSTowingWidget
                     Logger.Error("Failed to retrieve tow events from the AMS RestAPI Server");
                     Logger.Error(e.Message);
                     Logger.Error(e);
-                    Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.BASE_URI} ");
+                    Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.AMS_REST_SERVICE_URI} ");
                     Logger.Error($"2. Check AMS Access Token is correct\n");
                     bRunningOK = false;  // Flag to indicate that there was an error
                     Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);  //Wait a bit  and then try again
                 }
             } while (!bRunningOK);  // Continue the loop until the server can be contacted
         }
-
         public async Task GetStandsAsync()
         {
 
@@ -199,29 +223,19 @@ namespace DOH_AMSTowingWidget
                     {
 
                         client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
-
-
-                        string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Stands";
-
+                        string uri = Parameters.AMS_REST_SERVICE_URI + $"{Parameters.APT_CODE}/Stands";
                         Logger.Trace($"URI for Stands source set to {uri}");
 
                         var result = await client.GetAsync(uri);
                         XElement xmlRoot = XDocument.Parse(await result.Content.ReadAsStringAsync()).Root;
 
-                        this.GateXelement = xmlRoot;
-
-                        Logger.Trace("Populating Stands Cache");
+                        Logger.Trace("===> Start of clearing stands <=== \n ");
                         foreach (XElement e in from n in xmlRoot.Descendants() where (n.Name == "FixedResource") select n)
                         {
-                            StandEntity stand = new StandEntity(e);
-                            standManager.ClearStandAsync(stand);
-//                            towManager.AddStand(stand);
-                            if (Parameters.DEEPTRACE)
-                            {
-                                Logger.Trace(stand);
-                            }
+                            var t = Task.Run(() => standManager.ClearStandAsync(new StandEntity(e)));
+                            t.Wait();
                         }
-                        Logger.Trace("Populating Stands Cache Complete");
+                        Logger.Trace("===> End of clearing stands <=== \n ");
                     }
                     bRunningOK = true;
 
@@ -231,14 +245,13 @@ namespace DOH_AMSTowingWidget
                     Logger.Error("Failed to retrieve stands from the AMS RestAPI Server");
                     Logger.Error(e.Message);
                     Logger.Error(e);
-                    Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.BASE_URI} ");
+                    Logger.Error($"1. Check AMS RestAPI Server at: {Parameters.AMS_REST_SERVICE_URI} ");
                     Logger.Error($"2. Check AMS Access Token is correct\n");
                     bRunningOK = false;  // Flag to indicate that there was an error
                     Thread.Sleep(Parameters.RESTSERVER_RETRY_INTERVAL);  //Wait a bit  and then try again
                 }
             } while (!bRunningOK);  // Continue the loop until the server can be contacted
         }
-
 
         // Start the thread to listen to incoming update notifications
         public void StartMQListener()
@@ -273,7 +286,6 @@ namespace DOH_AMSTowingWidget
             }
         }
 
-
         // Listen for incoming update notifications
         private void ListenToQueue()
         {
@@ -285,30 +297,28 @@ namespace DOH_AMSTowingWidget
                 //Put it in a Try/Catch so on bad message or reading problem dont stop the system
                 try
                 {
-                    Logger.Trace("Waiting for notification message");
+                    //                  Logger.Trace("Waiting for notification message");
                     using (Message msg = recvQueue.Receive(new TimeSpan(0, 0, 5)))
                     {
-
-                        Logger.Trace("Message Received");
                         string xml;
                         using (StreamReader reader = new StreamReader(msg.BodyStream))
                         {
                             xml = reader.ReadToEnd();
                         }
-                        ProcessMessage(xml, RandomString(10));
+                        ProcessMessage(xml);
                     }
                 }
-                catch (MessageQueueException e)
+                catch (MessageQueueException)
                 {
                     // Handle no message arriving in the queue.
-                    if (e.MessageQueueErrorCode == MessageQueueErrorCode.IOTimeout)
-                    {
-                        if (Parameters.DEEPTRACE)
-                        {
-                            Logger.Trace("DEEP TRACE ===>> No Message Recieved in Rest Serer Notification Queue <<==== DEEP TRACE");
+                    //if (e.MessageQueueErrorCode == MessageQueueErrorCode.IOTimeout)
+                    //{
+                    //    if (Parameters.DEEPTRACE)
+                    //    {
+                    //        Logger.Trace("DEEP TRACE ===>> No Message Recieved in Rest Serer Notification Queue <<==== DEEP TRACE");
 
-                        }
-                    }
+                    //    }
+                    //}
 
                     // Handle other sources of a MessageQueueException.
                 }
@@ -322,25 +332,27 @@ namespace DOH_AMSTowingWidget
             Logger.Info("Queue Listener Stopped");
             receiveThread.Abort();
         }
-
-        public void ProcessMessage(string xml, string id)
+        public void ProcessMessage(string xml)
         {
-
-            Logger.Trace($"Processing Message  {id}");
+            string id = null;
 
             try
             {
 
-                if (Parameters.DEEPTRACE)
-                {
-                    Logger.Trace("DEEP TRACE ===>>");
-                    Logger.Trace($"\n{xml}");
-                    Logger.Trace("<< ==== DEEP TRACE");
-                }
-
 
                 if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification"))
                 {
+                    id = RandomString(10);
+                    Logger.Trace($"Processing TowUpdate or Create Message  {id}");
+
+                    if (Parameters.DEEPTRACE)
+                    {
+                        Logger.Trace("DEEP TRACE  MESSAGE RECIEVED FROM QUEUE ===>>");
+                        Logger.Trace($"\n{xml}");
+                        Logger.Trace("\n<< ==== DEEP TRACE  MESSAGE RECIEVED FROM QUEUE");
+                    }
+
+
                     XElement xmlRoot = XDocument.Parse(xml).Root;
                     XElement towNode = xmlRoot.Element("Notification").Element("Towing");
                     towManager.SetTowEvent(towNode);
@@ -350,19 +362,43 @@ namespace DOH_AMSTowingWidget
 
                 if (xml.Contains("TowingDeletedNotification"))
                 {
+                    id = RandomString(10);
+                    Logger.Trace($"Processing TowDelete Message  {id}");
+
+                    if (Parameters.DEEPTRACE)
+                    {
+                        Logger.Trace("DEEP TRACE  MESSAGE RECIEVED FROM QUEUE ===>>");
+                        Logger.Trace($"\n{xml}");
+                        Logger.Trace("\n<< ==== DEEP TRACE  MESSAGE RECIEVED FROM QUEUE");
+                    }
+
                     XElement xmlRoot = XDocument.Parse(xml).Root;
                     XElement towNode = xmlRoot.Element("Notification").Element("Towing");
                     TowEntity tow = new TowEntity(towNode);
+
                     towManager.RemoveTowAndClear(tow);
-                    towManager.RemoveTowAndClear(towNode.Element("TowingId").Value);
-                    Logger.Trace($"Delete Message Processed {id}");
+
+                    if (Parameters.ALERT_STAND)
+                    {
+                        try
+                        {
+                            Task.Run(() => standManager.UpdateStandAsync(tow, true)).Wait();
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Error($"Failed to update stand for {tow}. {e.Message}");
+                        }
+                    }
+                    Logger.Info($"Delete Message Processed {id}");
                     return;
                 }
 
-                if (Parameters.DEEPTRACE)
-                {
-                    Logger.Trace($"Message {id} Does Not Contain Towing Update, ignoring");
-                }
+                Logger.Trace($"Notification Message Does Not Contain Towing Update. Ignored Message");
+
+                //if (Parameters.DEEPTRACE)
+                //{
+                //    Logger.Trace($"Message {id} Does Not Contain Towing Update, ignoring");
+                //}
 
             }
             catch (Exception e)
@@ -378,7 +414,6 @@ namespace DOH_AMSTowingWidget
                 }
             }
         }
-
         private void UpdateFlights()
         {
             // The status may have changed from "Alerted" to "Non Alaerted" while the
@@ -389,8 +424,7 @@ namespace DOH_AMSTowingWidget
 
             try
             {
-
-                using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient())
+                using (AMSIntegrationServiceClient client = new AMSIntegrationServiceClient(binding, address))
                 {
 
                     try
@@ -444,7 +478,6 @@ namespace DOH_AMSTowingWidget
             }
 
         }
-
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

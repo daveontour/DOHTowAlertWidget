@@ -5,14 +5,12 @@ using Topshelf;
 
 
 
-//Version RC 3.7
+//Version 4.0
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
     class Program
     {
-
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         // Primarily skeleton code for defining the ConsoleApp/Service to be managed by TopShelf
         static void Main(string[] args)
@@ -24,9 +22,9 @@ namespace DOH_AMSTowingWidget
                  * The two key methods that Exchange has to implement are "Start()" and "Stop()"
                  */
 
-                x.Service<TowNotStarted>(s =>
+                x.Service<TowMonitor>(s =>
                 {
-                    s.ConstructUsing(core => new TowNotStarted());
+                    s.ConstructUsing(core => new TowMonitor());
                     s.WhenStarted(core => core.Start());
                     s.WhenStopped(core => core.Stop());
                 });

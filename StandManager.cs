@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DOH_AMSTowingWidget
+namespace AMSTowingAlertWidget
 {
     public class StandManager
     {
@@ -35,8 +35,14 @@ namespace DOH_AMSTowingWidget
 
         public StandManager() { }
 
-        public async void UpdateStandAsync(TowEntity tow)
+        public async void UpdateStandAsync(TowEntity tow, bool delete = false)
         {
+            if (tow == null)
+            {
+                Logger.Error($"Update Stand Async: TOW IS NULL ERROR");
+                return;
+            }
+
             StandEntity stand = await GetStand(tow.fromStand);
 
             if (stand == null)
@@ -50,16 +56,17 @@ namespace DOH_AMSTowingWidget
             update = update.Replace("@StandSortOrder", stand.SortOrder);
             update = update.Replace("@StandArea", stand.Area);
 
-            if (tow.isAlerted())
+            if (tow.isAlerted() && !delete)
             {
                 update = update.Replace("@GateTowAlert", "true");
                 update = update.Replace("@GateTowId", tow.towID);
             }
             else
             {
-                if (stand.alertTowId != tow.towID)
+                if (stand.alertTowId != tow.towID && stand.alertTowId != null)
                 {
-                    Logger.Info("Tow update not the one flagged by this stand at the moment");
+                    Logger.Info("\nTow update not the one flagged by this stand at the moment");
+                    Logger.Info($"TowID = {tow.towID}, Current ID = {stand.alertTowId}");
                     return;
                 }
                 else
@@ -67,12 +74,14 @@ namespace DOH_AMSTowingWidget
                     update = update.Replace("@GateTowAlert", "false");
                     update = update.Replace("@GateTowId", null);
                 }
-
             }
+
+
+            Logger.Info($"Updating Stand {stand.Id}");
 
             using (var client = new HttpClient())
             {
-                string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Stands/{stand.Id}";
+                string uri = Parameters.AMS_REST_SERVICE_URI + $"{Parameters.APT_CODE}/Stands/{stand.Id}";
                 HttpContent httpContent = new StringContent(update, Encoding.UTF8, "application/xml");
                 client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
 
@@ -81,10 +90,10 @@ namespace DOH_AMSTowingWidget
                     HttpResponseMessage response = await client.PutAsync(uri, httpContent);
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        Logger.Info($"Updated Stand {stand.Id}");
                         if (Parameters.DEEPTRACE)
                         {
-                            Logger.Error(update);
+                            Logger.Trace(update);
+                            Logger.Trace(await response.Content.ReadAsStringAsync());
                         }
                     }
                 }
@@ -97,20 +106,25 @@ namespace DOH_AMSTowingWidget
                     }
                     return;
                 }
-
-
             }
+
+            Logger.Info($"Stand Updated {stand.Id}");
+
+            stand = await GetStand(tow.fromStand);
+            Logger.Trace($"===========>  {stand}");
         }
 
         public async void ClearStandAsync(StandEntity stand)
         {
 
-            if (stand == null)
+            if (stand == null || (stand.towAlert == false && (stand.alertTowId == null || stand.alertTowId == "")))
             {
                 return;
             }
-
-            Logger.Info($"Clearing Stand {stand}");
+            else
+            {
+                Logger.Trace($"Need to Clear: {stand}");
+            }
 
             string update = standUpdate.Replace("@StandId", stand.Id);
             update = update.Replace("@StandName", stand.Name);
@@ -122,7 +136,7 @@ namespace DOH_AMSTowingWidget
 
             using (var client = new HttpClient())
             {
-                string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Stands/{stand.Id}";
+                string uri = Parameters.AMS_REST_SERVICE_URI + $"{Parameters.APT_CODE}/Stands/{stand.Id}";
                 HttpContent httpContent = new StringContent(update, Encoding.UTF8, "application/xml");
                 client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
 
@@ -133,26 +147,16 @@ namespace DOH_AMSTowingWidget
                     {
                         Logger.Info($"CLEARED Stand {stand.Id}");
                         return;
-                        //if (Parameters.DEEPTRACE)
-                        //{
-                        //    Logger.Error(update);
-                        //}
                     }
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
-                    Logger.Error($"Failed to update Stand {stand.Id}");
+                    Logger.Error($"Failed to update Stand {stand.Id}. {ex.Message}");
                     if (Parameters.DEEPTRACE)
                     {
                         Logger.Error(update);
                     }
                     return;
-                }
-
-                Logger.Info($"Updated Stand {stand.Id}");
-                if (Parameters.DEEPTRACE)
-                {
-                    Logger.Trace(update);
                 }
             }
         }
@@ -165,7 +169,7 @@ namespace DOH_AMSTowingWidget
             {
 
                 client.DefaultRequestHeaders.Add("Authorization", Parameters.TOKEN);
-                string uri = Parameters.BASE_URI + $"{Parameters.APT_CODE}/Stands";
+                string uri = Parameters.AMS_REST_SERVICE_URI + $"{Parameters.APT_CODE}/Stands";
 
 
                 var result = await client.GetAsync(uri);
