@@ -10,7 +10,7 @@ using System.Xml;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationWebAPI.Srv;
 
-//Version 4.0
+//Version 4.0.1
 
 namespace AMSTowingAlertWidget
 {

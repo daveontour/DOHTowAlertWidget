@@ -6,7 +6,7 @@ using System.Timers;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version 4.0
+//Version 4.0.1
 
 namespace AMSTowingAlertWidget
 {

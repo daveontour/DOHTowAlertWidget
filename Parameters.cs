@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-//Version 4.0
+//Version 4.0.1
 
 namespace AMSTowingAlertWidget
 {
@@ -32,7 +32,7 @@ namespace AMSTowingAlertWidget
         public static int RESTSERVER_RETRY_INTERVAL;
         public static bool STARTUP_FLIGHT_PROCESSING;
         public static bool STARTUP_STAND_PROCESSING;
-        public static string VERSION = "Version 4.0, 20200625";
+        public static string VERSION = "Version 4.0.1, 20200707";
         public static bool DEEPTRACE;
         public static bool ALERT_FLIGHT;
         public static bool ALERT_STAND;

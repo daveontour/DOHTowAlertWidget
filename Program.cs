@@ -5,7 +5,7 @@ using Topshelf;
 
 
 
-//Version 4.0
+//Version 4.0.1
 
 namespace AMSTowingAlertWidget
 {
