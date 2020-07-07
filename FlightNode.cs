@@ -52,10 +52,10 @@ namespace AMSTowingAlertWidget
             }
         }
 
-        public new string ToString()
+        override
+        public string ToString()
         {
             return $"AirlineCode: {airlineCode}, Flight Number: {fltNumber}, Nature: {nature}, Scheduled Date: {schedDate}";
-
         }
     }
 }

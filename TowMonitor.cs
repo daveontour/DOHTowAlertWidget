@@ -334,7 +334,7 @@ namespace AMSTowingAlertWidget
         }
         public void ProcessMessage(string xml)
         {
-            string id = null;
+            //          string id = null;
 
             try
             {
@@ -342,8 +342,8 @@ namespace AMSTowingAlertWidget
 
                 if (xml.Contains("TowingUpdatedNotification") || xml.Contains("TowingCreatedNotification"))
                 {
-                    id = RandomString(10);
-                    Logger.Trace($"Processing TowUpdate or Create Message  {id}");
+                    //                   id = RandomString(10);
+                    Logger.Info($"Processing TowUpdate or Create Message");
 
                     if (Parameters.DEEPTRACE)
                     {
@@ -356,14 +356,14 @@ namespace AMSTowingAlertWidget
                     XElement xmlRoot = XDocument.Parse(xml).Root;
                     XElement towNode = xmlRoot.Element("Notification").Element("Towing");
                     towManager.SetTowEvent(towNode);
-                    Logger.Trace($"Update or Created Message Processed {id}");
+                    Logger.Trace($"Update or Created Message Processed");
                     return;
                 }
 
                 if (xml.Contains("TowingDeletedNotification"))
                 {
-                    id = RandomString(10);
-                    Logger.Trace($"Processing TowDelete Message  {id}");
+                    //                   id = RandomString(10);
+                    Logger.Info($"Processing TowDelete Message");
 
                     if (Parameters.DEEPTRACE)
                     {
@@ -389,21 +389,16 @@ namespace AMSTowingAlertWidget
                             Logger.Error($"Failed to update stand for {tow}. {e.Message}");
                         }
                     }
-                    Logger.Info($"Delete Message Processed {id}");
+                    Logger.Info($"Delete Message Processed");
                     return;
                 }
 
                 Logger.Trace($"Notification Message Does Not Contain Towing Update. Ignored Message");
 
-                //if (Parameters.DEEPTRACE)
-                //{
-                //    Logger.Trace($"Message {id} Does Not Contain Towing Update, ignoring");
-                //}
-
             }
             catch (Exception e)
             {
-                Logger.Trace($"Message Processing Error {id}. See Contents Below");
+                Logger.Trace($"Message Processing Error. See Contents Below");
                 Logger.Trace(e.Message);
 
                 if (Parameters.DEEPTRACE)
@@ -478,11 +473,11 @@ namespace AMSTowingAlertWidget
             }
 
         }
-        public static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+        //public static string RandomString(int length)
+        //{
+        //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        //    return new string(Enumerable.Repeat(chars, length)
+        //      .Select(s => s[random.Next(s.Length)]).ToArray());
+        //}
     }
 }

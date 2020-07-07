@@ -40,7 +40,6 @@ namespace AMSTowingAlertWidget
             try
             {
                 tow = new TowEntity(e);
-                Logger.Info($"Tow Entity Created: {tow.ToString()}");
             }
             catch (Exception ex)
             {
@@ -57,7 +56,17 @@ namespace AMSTowingAlertWidget
                 // The ActualTimes are set, so the the flights should be updated that
                 // the tow has started and any timer task should be cancelled and the 
                 // TowEntity removed from the map
-                RemoveTowAndClear(tow, false);
+
+                if (Parameters.ALERT_FLIGHT)
+                {
+                    RemoveTowAndClear(tow, false);
+                }
+
+                if (Parameters.ALERT_STAND)
+                {
+                    Task.Run(() => StandManager.UpdateStandAsync(tow)).Wait();
+                }
+
                 Logger.Trace($"No need to set Tow Event Timer - All tow events completed for {tow.towID}");
                 return null;
             }
@@ -88,7 +97,16 @@ namespace AMSTowingAlertWidget
                     // if they should be in the future
                     if (timeToStartTrigger > 10000)
                     {
-                        SendAlertStatus_Conditionlly_Clear(tow);
+                        if (Parameters.ALERT_FLIGHT)
+                        {
+                            SendAlertStatus_Conditionlly_Clear(tow);
+                        }
+
+                        if (Parameters.ALERT_STAND)
+                        {
+                            Task.Run(() => StandManager.UpdateStandAsync(tow)).Wait();
+                        }
+
                     }
 
                     //It may have been in the past, so schedule it straight away
@@ -111,9 +129,8 @@ namespace AMSTowingAlertWidget
 
                         if (Parameters.ALERT_STAND)
                         {
-                            Logger.Info($"Actual Start Timer fired: {tow.towID },  Updating Stand: {tow.fromStand}");
+                            Logger.Info($"Timer fired (Actual Start): {tow.towID },  Updating Stand: {tow.fromStand}");
                             Task.Run(() => StandManager.UpdateStandAsync(tow)).Wait();
-
                         }
 
                     };
@@ -134,7 +151,15 @@ namespace AMSTowingAlertWidget
                     // if they should be in the future
                     if (timeToEndTrigger > 10000)
                     {
-                        SendAlertStatus_Conditionlly_Clear(tow);
+                        if (Parameters.ALERT_FLIGHT)
+                        {
+                            SendAlertStatus_Conditionlly_Clear(tow);
+                        }
+
+                        if (Parameters.ALERT_STAND)
+                        {
+                            Task.Run(() => StandManager.UpdateStandAsync(tow)).Wait();
+                        }
                     }
 
                     //It may have been in the past, so schedule it straight away
@@ -161,7 +186,7 @@ namespace AMSTowingAlertWidget
 
                         if (Parameters.ALERT_STAND)
                         {
-                            Logger.Info($"Actual End Timer fired: {tow.towID }, Updating Stand: {tow.fromStand}");
+                            Logger.Info($"Timer fired (Actual End): {tow.towID }, Updating Stand: {tow.fromStand}");
                             Task.Run(() => StandManager.UpdateStandAsync(tow)).Wait();
                         }
                     };
@@ -203,7 +228,6 @@ namespace AMSTowingAlertWidget
                     TowEntity tow = towMap[key];
                     Logger.Info($"Removing Tow Event {tow.ToString()}, Flights {tow.fltStr}");
                     tow.StopTimer();
-                    //       SendAlertStatusClear(tow);
                     towMap.Remove(key);
                 }
                 catch (Exception e)
@@ -215,30 +239,6 @@ namespace AMSTowingAlertWidget
                 }
             }
         }
-
-
-        //public void RemoveTowAndClear(string key, bool logError = true)
-        //{
-        //    lock (padlock)
-        //    {
-        //        // If there is an exisiting tow event in the cache, delete it.
-        //        try
-        //        {
-        //            TowEntity towExisting = towMap[key];
-        //            Logger.Info($"Removing Tow Event {towExisting}, Flights {towExisting.fltStr}");
-        //            towExisting.StopTimer();
-        //            SendAlertStatus_Conditionlly_Clear(towExisting);
-        //            towMap.Remove(key);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            if (logError)
-        //            {
-        //                Logger.Error(e.Message);
-        //            }
-        //        }
-        //    }
-        //}
         public void RemoveTowAndClear(TowEntity tow, bool logError = true)
         {
             lock (padlock)
@@ -297,6 +297,11 @@ namespace AMSTowingAlertWidget
             {
                 foreach (TowEntity t in towMap.Values)
                 {
+                    if (t.towID == tow.towID)
+                    {
+                        // Skip the tow we are currently dealing with
+                        continue;
+                    }
                     if (t.isActiveForFlight(flight))
                     {
                         return true;

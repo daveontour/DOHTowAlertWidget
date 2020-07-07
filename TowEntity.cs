@@ -80,7 +80,8 @@ namespace AMSTowingAlertWidget
 
             return false;
         }
-        public new string ToString()
+        override
+        public string ToString()
         {
             return $"TowID: {towID},  From: {fromStand}, ScheduleStartTime: {schedStartTime},  isActualStartSet: {isActualStartSet},  ScheduleEndTime: {schedEndTime},  isActualEndSet: {isActualEndSet}";
         }

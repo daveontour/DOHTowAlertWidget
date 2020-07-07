@@ -37,6 +37,9 @@ namespace AMSTowingAlertWidget
 
         public async void UpdateStandAsync(TowEntity tow, bool delete = false)
         {
+
+            // param 'delete'indicates that a TowingDeletedNotification has been received for this towing event
+
             if (tow == null)
             {
                 Logger.Error($"Update Stand Async: TOW IS NULL ERROR");
@@ -56,28 +59,49 @@ namespace AMSTowingAlertWidget
             update = update.Replace("@StandSortOrder", stand.SortOrder);
             update = update.Replace("@StandArea", stand.Area);
 
-            if (tow.isAlerted() && !delete)
+            if (delete)
             {
-                update = update.Replace("@GateTowAlert", "true");
-                update = update.Replace("@GateTowId", tow.towID);
-            }
-            else
-            {
-                if (stand.alertTowId != tow.towID && stand.alertTowId != null)
-                {
-                    Logger.Info("\nTow update not the one flagged by this stand at the moment");
-                    Logger.Info($"TowID = {tow.towID}, Current ID = {stand.alertTowId}");
-                    return;
-                }
-                else
+                // Clear any alerts, if the stand is currently alerted because of the delete notification.
+                if (stand.alertTowId == tow.towID)
                 {
                     update = update.Replace("@GateTowAlert", "false");
                     update = update.Replace("@GateTowId", null);
                 }
+
+                await ExecuteUpdate(stand, tow, update);
+                return;
+            }
+
+            if (tow.isAlerted())
+            {
+                // The tow is in an alerted state, so update the stand
+                update = update.Replace("@GateTowAlert", "true");
+                update = update.Replace("@GateTowId", tow.towID);
+
+                await ExecuteUpdate(stand, tow, update);
+                return;
             }
 
 
-            Logger.Info($"Updating Stand {stand.Id}");
+            if (stand.alertTowId == tow.towID && stand.alertTowId != null)
+            {
+                // The tow isn't alerted, so it can be cleared
+                update = update.Replace("@GateTowAlert", "false");
+                update = update.Replace("@GateTowId", null);
+
+                await ExecuteUpdate(stand, tow, update);
+                return;
+            }
+
+            // If we get here, the tow is not alerted and it does not impact the stands current state, so do nothing
+
+            return;
+
+        }
+
+        private async Task ExecuteUpdate(StandEntity stand, TowEntity tow, string update)
+        {
+            Logger.Trace($"Updating Stand {stand.Id}");
 
             using (var client = new HttpClient())
             {
@@ -108,12 +132,12 @@ namespace AMSTowingAlertWidget
                 }
             }
 
-            Logger.Info($"Stand Updated {stand.Id}");
+            Logger.Trace($"Stand Updated {stand.Id}");
 
             stand = await GetStand(tow.fromStand);
             Logger.Trace($"===========>  {stand}");
-        }
 
+        }
         public async void ClearStandAsync(StandEntity stand)
         {
 
