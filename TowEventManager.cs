@@ -4,7 +4,7 @@ using System.Timers;
 using System.Xml.Linq;
 using WorkBridge.Modules.AMS.AMSIntegrationAPI.Mod.Intf.DataTypes;
 
-//Version RC 3.7
+//Version DOH Prod  3.7.1
 
 namespace DOH_AMSTowingWidget {
     class TowEventManager {
@@ -321,6 +321,7 @@ namespace DOH_AMSTowingWidget {
                         } else {
                             Logger.Trace($"No Arrival Flight for:  {tow.towID}");
                         }
+                        callOK = true;
                     } catch (Exception e) {
                         Logger.Error("Failed to update the custom field");
                         Logger.Error(e.Message);
@@ -347,6 +348,7 @@ namespace DOH_AMSTowingWidget {
                         } else {
                             Logger.Trace($"No Departure Flight for:  {tow.towID}");
                         }
+                        callOK = true;
                     } catch (Exception e) {
                         Logger.Error("Failed to update the custom field");
                         Logger.Error(e.Message);

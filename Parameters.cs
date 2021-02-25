@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-//Version RC 3.7
+//Version DOH Prod  3.7.1
 
 namespace DOH_AMSTowingWidget {
 
@@ -28,7 +28,7 @@ namespace DOH_AMSTowingWidget {
         public static double TO_HOURS;
         public static int RESTSERVER_RETRY_INTERVAL;
         public static bool STARTUP_FLIGHT_PROCESSING;
-        public static string VERSION = "Version 3.7, 20200111";
+        public static string VERSION = "Version 3.7.1, 20210225";
         public static bool DEEPTRACE;
 
 

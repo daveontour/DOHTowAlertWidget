@@ -5,7 +5,7 @@ using Topshelf;
 
 
 
-//Version RC 3.7
+//Version DOH Prod  3.7.1
 
 namespace DOH_AMSTowingWidget {
     class Program {
